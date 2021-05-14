@@ -23,9 +23,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-STATIC_DIR = BASE_DIR / 'static'
-MEDIA_DIR = BASE_DIR / 'media'
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -52,6 +49,11 @@ INSTALLED_APPS = [
     'account',
 ]
 
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar',
+    ]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -61,6 +63,16 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+    INTERNAL_IPS = [
+    # ...
+    '127.0.0.1',
+    # ...
+    ]
 
 ROOT_URLCONF = 'adm.urls'
 
@@ -121,13 +133,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Europe/Rome'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 if DEBUG == False:
@@ -155,17 +163,14 @@ LOGIN_URL='login'
 LOGIN_REDIRECT_URL = 'account:index'
 LOGOUT_REDIRECT_URL = 'account:index'
 
-STATIC_URL = '/static/'
+STATIC_DIR = BASE_DIR / 'static'
 STATICFILES_DIRS = [
-    STATIC_DIR,
+    BASE_DIR / "static",
 ]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-STATICFILES_DIRS = (BASE_DIR / 'static',)
-
-if DEBUG == False:
-    STATIC_ROOT = BASE_DIR / 'static'
+MEDIA_DIR = BASE_DIR / 'media'
 
 # VARIABLES SETTINGS
 ACTIVATION_REGISTRATION = True
