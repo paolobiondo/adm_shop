@@ -138,12 +138,12 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-if DEBUG == False:
-    CSRF_COOKIE_SECURE = True #to avoid transmitting the CSRF cookie over HTTP accidentally.
-    SESSION_COOKIE_SECURE = True #to avoid transmitting the session cookie over HTTP accidentally.
-    SECURE_BROWSER_XSS_FILTER = True
-    SECURE_CONTENT_TYPE_NOSNIFF = True
-    SECURE_SSL_REDIRECT = True
+# if DEBUG == False:
+#     CSRF_COOKIE_SECURE = True #to avoid transmitting the CSRF cookie over HTTP accidentally.
+#     SESSION_COOKIE_SECURE = True #to avoid transmitting the session cookie over HTTP accidentally.
+#     SECURE_BROWSER_XSS_FILTER = True
+#     SECURE_CONTENT_TYPE_NOSNIFF = True
+#     SECURE_SSL_REDIRECT = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -173,4 +173,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_DIR = BASE_DIR / 'media'
 
 # VARIABLES SETTINGS
-ACTIVATION_REGISTRATION = True
+# ACTIVATION_REGISTRATION = True
