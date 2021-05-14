@@ -40,7 +40,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item nav-item-dashboard">
                 <a class="nav-link" href="{% url 'admin_panel:index'%}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -75,9 +75,9 @@
             <hr class="sidebar-divider">
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
+            <li class="nav-item nav-item-users">
                 <a class="nav-link" href="{% url 'admin_panel:users' %}">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-users"></i>
                     <span>Users</span></a>
             </li>
 
@@ -285,10 +285,6 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
@@ -366,6 +362,7 @@
             </div>
         </div>
     </div>
+ 
 
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'admin/vendor/jquery/jquery.min.js' %}"></script>

@@ -7,11 +7,6 @@ class Index(View):
         args = {}
         return render(request,'admin_panel/index.html',args)
 
-class Profile(View):
-    def get(self,request):
-        args = {}
-        return render(request,'admin_panel/profile.html',args)
-
 class Users(View):
     def get(self, request):
         args = {}

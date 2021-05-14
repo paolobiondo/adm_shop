@@ -2,7 +2,68 @@
 {% load static %}
 {% block title_header %}ADM Admin{% endblock %}
 {% block content_admin %}
-a
+<div class="row">
+
+    <!-- Area Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Orders</h6>
+                <div class="dropdown no-arrow">
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-area">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Profile:</div>
+                        <a class="dropdown-item" href="#">Edit Profile</a>
+                        <a class="dropdown-item" href="#">Edit Password</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Delete Account</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-pie pt-4 pb-2" style="text-align:center">
+                    <img class="img-profile rounded-circle" src="{% static 'admin/img/undraw_profile.svg' %}" height="100">
+                    <br>
+                    {{user.username}}
+                    <p style="margin-top:10px;">
+                        {{user.first_name}} {{user.last_name}}
+                        <br>
+                        <span style="font-size:13px;">{{user.email}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
 {% block script_content %}
+<script>
+    jQuery('.nav-item-dashboard').addClass('active');
+</script>
 {% endblock %}
