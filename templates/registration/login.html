@@ -1,0 +1,14 @@
+{% extends 'base_admin.html' %}
+{% block title_header %}Login ADMP{% endblock %}
+{% block content_admin %}
+<div class="container-fluid">
+    <div class="section">
+        <h2>Log In</h2>
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Log In</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

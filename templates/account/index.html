@@ -1,9 +1,12 @@
-{% extends 'base.html' %}
-{% block title_header %}ADM{% endblock %}
-{% block content %}
-<div class="container-fluid">
-    <div class="section">
-        a
-    </div>
-</div>
+
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block title_header %}ADMP{% endblock %}
+{% block content_admin %}
+a
+{% endblock %}
+{% block script_content %}
+<script>
+    jQuery('.nav-item-home').addClass('active');
+</script>
 {% endblock %}

@@ -152,8 +152,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # GENERAL SETTINGS
 SITE_ID = 1
 LOGIN_URL='login'
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'account:index'
+LOGOUT_REDIRECT_URL = 'account:index'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
