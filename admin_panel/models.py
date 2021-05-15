@@ -10,3 +10,11 @@ class UserProfileInfo(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Setting(models.Model):
+    setting = models.TextField(max_length=150)
+    value = models.TextField(max_length=150)
+
+    def __str__(self):
+        return self.setting
+

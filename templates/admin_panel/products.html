@@ -1,0 +1,63 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block title_header %}Products | ADM{% endblock %}
+{% block content_admin %}
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Products</h1>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">List products</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Discounted Price</th>
+                        <th>Units</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{product.id}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.price}}</td>
+                        <td>{{product.discount_price}}</td>
+                        <td>{{product.units}}</td>
+                        <td>
+                            <a href="#" class="btn btn-primary">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                <span class="text">Edit</span>
+                            </a> 
+                            <a href="#" class="btn btn-danger">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span class="text">Delete</span>
+                            </a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script_content %}
+<script>
+    jQuery('.nav-item-products').addClass('active');
+</script>
+{% endblock %}

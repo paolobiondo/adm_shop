@@ -32,8 +32,10 @@ SECRET_KEY = 'django-insecure-*@##tjz*4d0d6!^2z)!fph7b%@)8dj^_g*ovy=-@gy5nad8s$_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -46,9 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
-    'rest_framework',
-    
     'admin_panel',
+    'product',
 ]
 
 if DEBUG:
@@ -176,3 +177,12 @@ MEDIA_DIR = BASE_DIR / 'media'
 
 # VARIABLES SETTINGS
 # ACTIVATION_REGISTRATION = True
+
+
+#######################################
+##   WHAT TO DO AFTER INSTALLATION   ##
+#######################################
+#
+#  Insert into Setting -> currency = € and registration = True 
+#
+#######################################

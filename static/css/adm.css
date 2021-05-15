@@ -1,0 +1,40 @@
+/*
+ADM Template (Boostrap)
+
+Palette:
+Main: #583d72
+secondary: #9f5f80
+third: #ff8474
+fourth: #ffc996
+*/
+
+/* GENERAL */
+body {
+  color: #ffc996;
+}
+a {
+  color: #ffc996;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
+  color: #ffc996;
+}
+
+.link-secondary {
+  color: #EDCDAF;
+  text-decoration: none;
+}
+.link-secondary:hover {
+  color: #fff;
+}
+
+/* HEADER */
+.blog-header {
+  line-height: 2;
+  background: #583d72;
+}
+
+/* FOOTER */
+footer {
+  background-color: #583d72;
+}

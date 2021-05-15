@@ -1,0 +1,49 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block title_header %}Categories | ADM{% endblock %}
+{% block content_admin %}
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Categories</h1>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">List categories</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>
+                            {{category.category}}
+                            {%if category.parents%}
+                            {% for child in category.parents %}
+                            <ul>
+                                <li>{{child.name}}</li>
+                            </ul>
+                            {% endfor %}
+                            {%endif%}
+                        </td>
+                        <td></td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script_content %}
+<script>
+    jQuery('.nav-item-categories').addClass('active');
+</script>
+{% endblock %}

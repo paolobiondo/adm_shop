@@ -5,5 +5,7 @@ app_name = 'admin_panel'
 
 urlpatterns = [
    path('',views.Index.as_view() ,name='index'),
-   path('users',views.Users.as_view(), name='users')
+   path('users',views.Users.as_view(), name='users'),
+   path('products', views.Products.as_view() ,name='products'),
+   path('categories', views.Categories.as_view() ,name='categories'),
 ]
