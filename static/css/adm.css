@@ -2,39 +2,83 @@
 ADM Template (Boostrap)
 
 Palette:
-Main: #583d72
-secondary: #9f5f80
-third: #ff8474
-fourth: #ffc996
+Main: #0061a8
+secondary: #fbe0c4
+third: #8ab6d6
+fourth: #2978b5
 */
 
 /* GENERAL */
 body {
-  color: #ffc996;
+  color: #fbe0c4;
+  font-family: 'Roboto', sans-serif;
 }
 a {
-  color: #ffc996;
-}
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Playfair Display", Georgia, "Times New Roman", serif/*rtl:Amiri, Georgia, "Times New Roman", serif*/;
-  color: #ffc996;
+  color: #fbe0c4;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  color: #fbe0c4;
+}
+
+/* COMPONENTS */
 .link-secondary {
-  color: #EDCDAF;
+  color: #fbe0c4;
   text-decoration: none;
 }
 .link-secondary:hover {
+  color: #8ab6d6;
+}
+.btn-primary {
+  background: #8ab6d6;
+  border: 1px solid #8ab6d6;
   color: #fff;
+}
+.btn-primary:hover {
+  background: #fbe0c4;
+  border: 1px solid #fbe0c4; 
+}
+.text-muted {
+  color: #fbe0c4 !important;
+}
+
+.bg-light {
+  background: #8ab6d6 !important;
 }
 
 /* HEADER */
 .blog-header {
   line-height: 2;
-  background: #583d72;
+  background: #0061a8;
 }
+.navbar {
+  margin-bottom: 30px;
+}
+/* change the background color */
+.navbar-custom {
+  background-color: #fbe0c4;
+}
+
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+  color: #333;
+}
+
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+  color: #333;
+}
+
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:focus .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+  color: #8ab6d6;
+}
+
 
 /* FOOTER */
 footer {
-  background-color: #583d72;
+  background-color: #0061a8;
 }
