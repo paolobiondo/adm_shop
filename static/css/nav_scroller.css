@@ -1,0 +1,45 @@
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+  margin-bottom: 30px;
+}
+
+.nav-scroller .nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: 0;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  text-transform: uppercase;
+}
+
+
+/* change the background color */
+.navbar-custom {
+  background-color: #fbe0c4;
+}
+
+/* change the brand and text color */
+.navbar-custom a {
+  color: #333;
+  display:block;
+  font-size:1em;
+  padding-left:15px;
+  margin-bottom:-9px;
+  text-transform: uppercase;
+}
+
+.navbar-custom a:hover,
+.navbar-custom a:focus,
+.navbar-custom .active {
+  color: #333;
+  border-bottom: 4px solid #8ab6d6;
+}

@@ -10,15 +10,15 @@ fourth: #2978b5
 
 /* GENERAL */
 body {
-  color: #fbe0c4;
+  color: #333;
   font-family: 'Roboto', sans-serif;
 }
 a {
-  color: #fbe0c4;
+  color: #333;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #fbe0c4;
+  color: #EDAE6D;
 }
 
 /* COMPONENTS */
@@ -35,9 +35,20 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
 }
 .btn-primary:hover {
-  background: #fbe0c4;
-  border: 1px solid #fbe0c4; 
+  background: #333;
+  border: 1px solid #333; 
 }
+
+.btn-secondary {
+  background: #EDAE6D;
+  border: 1px solid #EDAE6D;
+  color: #fff;
+}
+.btn-secondary:hover {
+  background: #333;
+  border: 1px solid #333; 
+}
+
 .text-muted {
   color: #fbe0c4 !important;
 }
@@ -46,39 +57,40 @@ h1, h2, h3, h4, h5, h6 {
   background: #8ab6d6 !important;
 }
 
+.section-title {
+  margin-top:30px;
+  margin-bottom:30px;
+}
+
+.top_margin {
+  margin-top:50px;
+}
+
+
 /* HEADER */
 .blog-header {
   line-height: 2;
   background: #0061a8;
 }
-.navbar {
-  margin-bottom: 30px;
+
+/* PRODUCTS LIST */
+.products_row {
+  margin-bottom:120px;
 }
-/* change the background color */
-.navbar-custom {
-  background-color: #fbe0c4;
+.price_card {
+  font-weight: 800; 
+  font-size:20px; 
+  margin-top:-16px;
 }
 
-/* change the brand and text color */
-.navbar-custom .navbar-brand,
-.navbar-custom .navbar-text {
-  color: #333;
+.discounted_price_card {
+  font-size:18px; 
+  text-decoration: line-through; 
+  color:rgba(51,51,51,0.4);
 }
-
-/* change the link color */
-.navbar-custom .navbar-nav .nav-link {
-  color: #333;
-}
-
-/* change the color of active or hovered links */
-.navbar-custom .nav-item.active .nav-link,
-.navbar-custom .nav-item:focus .nav-link,
-.navbar-custom .nav-item:hover .nav-link {
-  color: #8ab6d6;
-}
-
 
 /* FOOTER */
 footer {
   background-color: #0061a8;
 }
+
