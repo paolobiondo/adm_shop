@@ -1,13 +1,6 @@
 /*
 ADM Template (Boostrap)
 
-Palette:
-Main: #0061a8
-secondary: #fbe0c4
-third: #8ab6d6
-fourth: #2978b5
-*/
-
 /* GENERAL */
 body {
   color: #333;
@@ -22,6 +15,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* COMPONENTS */
+.main-color {
+  color: #0061a8;
+}
+.second-color {
+  color: #fbe0c4;
+}
+.third-color {
+  color: #8ab6d6;
+}
+.fourth-color {
+  color: #EDAE6D;
+}
+
 .link-secondary {
   color: #fbe0c4;
   text-decoration: none;
@@ -64,6 +70,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .top_margin {
   margin-top:50px;
+}
+
+
+.list-group .active {
+  background: #0061a8;
 }
 
 /* HEADER */

@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'admin_panel',
     'product',
     'home',
+
+    #3rd party plugins
+    'django_cleanup',
 ]
 
 if DEBUG:

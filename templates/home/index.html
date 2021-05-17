@@ -41,7 +41,8 @@
         <img class="card-img-top" data-src="media/{{product.cover}}" src="media/{{product.cover}}" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
         <div class="card-body">
             <p class="card-text text-center">{{product.name}}</p>
-            {%if product.price %}<p class="card-text text-center price_card">{{product.price}}{{currency.value}} {% if product.discount_price %}<span class="discounted_price_card">{{product.discount_price}}</span>{% endif %}</p>{% endif%}
+            {%if product.price %}<p class="card-text text-center price_card">{{product.price}}{{currency.value}} {% if product.discount_price %}<span class="discounted_price_card">{{product.discount_price}} {{currency.value}}</span>{% endif %}</p>{% endif%}
+            <p class="text-center"><button type="button" class="btn btn-sm btn-primary">Add to Cart</button></p>
         </div>
         </div>
     </div>
