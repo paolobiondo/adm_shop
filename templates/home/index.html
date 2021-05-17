@@ -42,7 +42,7 @@
         <div class="card-body">
             <p class="card-text text-center">{{product.name}}</p>
             {%if product.price %}<p class="card-text text-center price_card">{{product.price}}{{currency.value}} {% if product.discount_price %}<span class="discounted_price_card">{{product.discount_price}} {{currency.value}}</span>{% endif %}</p>{% endif%}
-            <p class="text-center"><button type="button" class="btn btn-sm btn-primary">Add to Cart</button></p>
+            <p class="text-center"><button type="button" class="btn btn-sm btn-primary add-to-cart-{{product.id}}" onclick="addToCart({{product.id}})">Add to Cart</button></p>
         </div>
         </div>
     </div>
@@ -50,5 +50,24 @@
 </div>	
 {% endblock %}
 {% block script_content %}
-<!-- SHOPPING CARD -->
+<script>
+/* Add-to-Cart Request */
+function addToCart(idProduct) {
+    var url = "{% url 'product:product' id=12345 %}".replace(/12345/, parseInt(idProduct));
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data:{
+            idProduct:idProduct,
+            unit:1,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(data) {
+            data = JSON.parse(data); // converts string of json to object
+            console.log(data);
+        }
+    });
+}
+
+</script>
 {% endblock %}

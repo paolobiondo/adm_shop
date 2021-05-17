@@ -23,7 +23,7 @@ urlpatterns = [
     path('adm_admin/',include('admin_panel.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('',include('home.urls')),
-    path('p/',include('product.urls')),
+    path('product/',include('product.urls')),
 ] 
 
 ####################################

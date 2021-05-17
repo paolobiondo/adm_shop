@@ -9,6 +9,7 @@ class ProductAdmin(admin.ModelAdmin):
 class EntryAdmin(admin.ModelAdmin):
     # Overide of the save model
     def save_model(self, request, obj, form, change):
+        print('test')
         obj.cart.total += obj.quantity * obj.product.price
         obj.cart.count += obj.quantity
         obj.cart.updated = datetime.now()

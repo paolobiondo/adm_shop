@@ -3,6 +3,7 @@ from django.utils.datetime_safe import datetime
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from decimal import Decimal
 
 # Create your models here.
 class Product(models.Model):
@@ -54,12 +55,7 @@ class Entry(models.Model):
 
 @receiver(post_save, sender=Entry)
 def update_add_cart(sender, instance, **kwargs):
-    instance.cart.total += instance.quantity * instance.product.price
+    instance.cart.total = Decimal(instance.cart.total) + Decimal(instance.quantity * instance.product.price)
     instance.cart.count += instance.quantity
     instance.cart.updated = datetime.now()
-
-@receiver(pre_delete, sender=Entry)
-def update_remove_cart(sender, instance, **kwargs):
-    instance.cart.total -= instance.quantity * instance.product.price
-    instance.cart.count -= instance.quantity
-    instance.cart.updated = datetime.now()
+    instance.cart.save()
