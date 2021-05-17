@@ -66,7 +66,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-top:50px;
 }
 
-
 /* HEADER */
 .blog-header {
   line-height: 2;
@@ -74,7 +73,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* PRODUCTS LIST */
-.products_row {
+.clear_row {
   margin-bottom:120px;
 }
 .price_card {

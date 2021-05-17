@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load home_custom_tags %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -37,6 +38,10 @@
               <li><a class="dropdown-item" href="{% url 'home:profile' %}">Profile</a></li>
               <li><a class="dropdown-item" href="#">Settings</a></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+              {% if user|is_admin_panel or user.is_superuser %}
+              <div class="dropdown-divider"></div>
+              <li><a class="dropdown-item" href="{% url 'admin_panel:index' %}">Admin</a></li>
+              {% endif %}
             </ul>
           </div>
           
@@ -57,7 +62,7 @@
     </div>
 
 
-    <div class="container">
+    <div class="container clear_row">
       <main class="container">
         {% block content_base_home %}
         {% endblock %}

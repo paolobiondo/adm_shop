@@ -1,0 +1,17 @@
+{% extends 'home/base_home.html' %}
+{% load static %}
+{% block content_base_home %}
+<div class="row">
+    <div class="col-12 col-md-3">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-account">Account</a>
+            <a href="#" class="list-group-item list-group-item-orders">Orders</a>
+            <a href="#" class="list-group-item list-group-item-address">Settings</a>
+          </div>
+    </div>
+    <div class="col-12 col-md-9">
+        {%block content_profile%}
+        {%endblock%}
+    </div>
+</div>
+{% endblock %}

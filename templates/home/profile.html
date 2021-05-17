@@ -1,9 +1,11 @@
-{% extends 'home/base_home.html' %}
+{% extends 'home/base_profile.html' %}
 {% load static %}
 {% block title_header %}{{user.username}} | ADM {% endblock %}
-{% block content_base_home %}
-a
-{% endblock %}
+{%block content_profile%}
+<p>Benvenuto {{user.first_name}} nel tuo profilo, qui puoi gestire i tuoi ordini, indirizzi e le impostazioni.</p>
+{%endblock%}
 {% block script_content %}
-<!-- SHOPPING CARD -->
+<script>
+    $('.list-group-item-account').addClass('active');
+</script>
 {% endblock %}
