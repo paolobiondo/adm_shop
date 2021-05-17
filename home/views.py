@@ -13,3 +13,8 @@ class Profile(LoginRequiredMixin, View):
     def get(self, request):
         args = {}
         return render(request,'home/profile.html',args)
+
+class Cart(View):
+    def get(self, request):
+        args = {}
+        return render(request,'home/cart.html',args)

@@ -32,7 +32,7 @@
 <div class="row" id="products">
     <div class="section-title text-center"> 
         <span class="sub-title">Our Products</span>
-      <h2><span>Top Recommended Dishes</span></h2>
+      <h2><span>Top Recommended Products</span></h2>
     </div>
     
     {%for product in products %}
@@ -50,24 +50,4 @@
 </div>	
 {% endblock %}
 {% block script_content %}
-<script>
-/* Add-to-Cart Request */
-function addToCart(idProduct) {
-    var url = "{% url 'product:product' id=12345 %}".replace(/12345/, parseInt(idProduct));
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data:{
-            idProduct:idProduct,
-            unit:1,
-            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-        },
-        success: function(data) {
-            data = JSON.parse(data); // converts string of json to object
-            console.log(data);
-        }
-    });
-}
-
-</script>
 {% endblock %}

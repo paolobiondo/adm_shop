@@ -27,6 +27,12 @@
           <div id="sidebar-responsive" class="sidebar-responsive">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <a href="{% url 'home:index' %}">Home</a>
+            <a class="dropdown-item d-block d-sm-none" href="{% url 'home:profile' %}">Profile</a>
+            <a class="dropdown-item d-block d-sm-none" href="#">Settings</a>
+            <a class="dropdown-item d-block d-sm-none" href="{% url 'logout' %}">Logout</a>
+            {% if user|is_admin_panel or user.is_superuser %}
+            <a class="dropdown-item d-block d-sm-none" href="{% url 'admin_panel:index' %}">Admin</a>
+            {% endif %}
             <!-- Max 4 elements -->
           </div>
           <div class="open-sidebar-responsive">
@@ -37,9 +43,13 @@
           <a class="blog-header-logo" href="#"><img src="{% static 'img/adm_bio.png'%}"></a>
         </div>
         <div class="col-4 col-sm-5">
+          <a class="cart_link" href="{% url 'home:cart' %}">
+            <button class="btn btn-secondary d-inline btn-sm" type="button"><i class="fas fa fa-shopping-cart"></i></button>
+            <span class='badge badge-warning' id='lblCartCount'> {{cart.count}} </span>
+          </a>
           {% if user.is_authenticated %}
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="dropdown d-none d-md-inline">
+            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               {{user.username}}
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -51,8 +61,9 @@
               <li><a class="dropdown-item" href="{% url 'admin_panel:index' %}">Admin</a></li>
               {% endif %}
             </ul>
-          </div>
-          
+          </div>         
+ 
+        </a>
           {%else%}
           <a class="btn btn-sm btn-primary" href="#">SIGN UP</a>
           <a class="btn btn-sm btn-secondary" href="{%url 'login'%}">LOGIN</a>
@@ -136,6 +147,79 @@
         document.getElementById("sidebar-responsive").style.width = "0";
       }
     </script>
+
+    <script>
+      function get_cookie_cart() {
+          var pos_cookie_cart = document.cookie.search('cart');
+          if(pos_cookie_cart != -1) {
+            var pos_cookie_cart_2 = document.cookie.slice(pos_cookie_cart).search(';');
+            if(pos_cookie_cart_2>0) {
+                cookie_to_save = document.cookie.slice(pos_cookie_cart,pos_cookie_cart_2);
+            } else {
+                cookie_to_save = document.cookie.slice(pos_cookie_cart);
+            }
+            cookie_cart_products = cookie_to_save.slice(cookie_to_save.search('=')+1);
+          }
+          else {
+            cookie_cart_products = null;
+          }
+          return cookie_cart_products;
+      }
+    </script>
+
+    {% if user.is_authenticated %}
+    <script>
+      /* Add-to-Cart Request */
+      function addToCart(idProduct) {
+          var url = "{% url 'product:product' id=12345 %}".replace(/12345/, parseInt(idProduct));
+          $.ajax({
+              url: url,
+              type: 'POST',
+              data:{
+                  idProduct:idProduct,
+                  csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+              },
+              success: function(data) {
+                  data = JSON.parse(data); // converts string of json to object
+                  console.log(data);
+              }
+          });
+      }
+    </script>
+    {% else %}
+    <script>
+      function counter_cookie_cart() {
+          var products = get_cookie_cart();
+          if(cookie_cart_products!=null) {
+            var products_splitted = products.split(",");
+            $('#lblCartCount').show();
+            $('#lblCartCount').text(products_splitted.length);
+          } else {
+            $('#lblCartCount').hide();
+          }
+          
+      }
+      counter_cookie_cart();
+      
+      function addToCart(idProduct) {
+          /* get cookie */
+          var cookie_cart_products = ""
+          cookie_cart_products = get_cookie_cart();
+          if(cookie_cart_products!=null) {   
+              var products_splitted = cookie_cart_products.split(",");
+              if(products_splitted.includes(idProduct) == false) {
+                /* write cookie */
+                document.cookie = "cart="+cookie_cart_products+","+idProduct;
+              }
+          } else {
+              document.cookie = "cart="+idProduct;
+          }
+          counter_cookie_cart();
+      }
+    </script>
+    {% endif %}
+
+    
     {% block script_content %}
     {% endblock %}
   </body>
