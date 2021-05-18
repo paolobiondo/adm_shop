@@ -14,12 +14,12 @@
             {%if user.is_authenticated%}
                 {% if cart_items %}
                     {% for item in cart_items %}
-                        <div class="row">
+                        <div class="row row-entry-{{item.id}}">
                             <div class="col-12 col-sm-12 col-md-2 text-center">
                                     <img class="img-responsive" src="media/{{item.product.cover}}" alt="prewiew" width="120" height="80">
                             </div>
                             <div class="col-12 text-center text-lg-start col-sm-12 col-md-6">
-                                <h4 class="product-name"><strong>{{item.product.name}}</strong></h4>
+                                <h5 class="product-name"><strong>{{item.product.name}}</strong></h5>
                             </div>
                             <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
                                 <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
@@ -28,19 +28,18 @@
                                 <div class="col-6 col-md-4">
                                     <div class="quantity">
                                         <input type="button" value="+" class="plus">
-                                        <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"
-                                            size="4">
+                                        <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty" size="4">
                                         <input type="button" value="-" class="minus">
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-4 text-end">
-                                    <button type="button" class="btn btn-outline-danger btn-xs">
+                                    <button type="button" class="btn btn-outline-danger btn-xs" onclick="deleteProduct({{item.id}})">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <hr>
+                        <hr class="hr-entry-{{item.id}}">
                         <!-- END PRODUCT -->
                     {%endfor%}
                     <div class="text-end">
@@ -49,12 +48,12 @@
                                 Update shopping cart
                             </a>
                         </div>
-                        <div class="d-inline" style="margin: 5px">
-                            Total price: <b>{{cart.total}} {{currency.value}}</b>
+                        <div class="d-inline " style="margin: 5px">
+                            Total price: <b><span class="total_price">{{cart.total}}</span> {{currency.value}}</b>
                         </div>
                     </div>
                 {%else%}
-                    <span id="no-item-cart">NON CI SONO ITEMS</span>
+                    <span id="no-item-cart">THERE ARE NO ITEMS</span>
                 {%endif%}
             {%else%}
             <div id="row_product_cart"></div>
@@ -63,7 +62,13 @@
     </div>
     <div class="card-footer">
         <div class="text-center" style="margin: 10px">
-            <input type="submit" href="" class="btn btn-success pull-right btn-checkout" value="Checkout">
+            {% if user.is_authenticated %}
+                <input type="submit" href="" class="btn btn-success pull-right btn-checkout" value="Checkout">
+            {% else %}
+                <p>You must log in to proceed</p>
+                <a class="btn btn-sm btn-primary" href="#">SIGN UP</a>
+                <a class="btn btn-sm btn-secondary" href="{%url 'login'%}">LOGIN</a>
+            {% endif %}
         </div>
     </div>
 </div>	
@@ -71,10 +76,42 @@
 
 {% block script_content %}
 {% if user.is_authenticated %}
+<script>
+    function deleteProduct(idEntry) {
+        var url = "{% url 'product:cart' id=12345 %}".replace(/12345/, parseInt(idEntry));
+        $.ajax({
+              url: url,
+              type: 'POST',
+              data:{
+                idEntry:idEntry,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+              },
+              success: function(data) {
+                data = JSON.parse(data); // converts string of json to object
+                if(data.success == 1) {
+                    $('.hr-entry-'+data.idEntry).remove();
+                    $('.row-entry-'+data.idEntry).remove();
+                    $('.total_price').text(data.cart.total);
+                    var counter = $('#lblCartCount').text();
+                    if(counter) {
+                      counter = parseInt(counter);
+                      if(counter==1){
+                        $('#lblCartCount').hide();
+                      } else {
+                        counter -=1;
+                        $('#lblCartCount').text(counter);
+                      }
+                    }
+                }
+              }
+        });
+    }
+</script>
 {% else %}
 <script>
     var total_cart = 0.0
     var products = get_cookie_cart();
+   
     if(products) {
         var products_splitted = products.split(",");
         var html = `<div class="d-inline">
@@ -87,13 +124,19 @@
                     </div>`;
         $('.text-end').append(html);
         for (let i = 0; i < products_splitted.length; ++i) {
-            var product = getProduct(products_splitted[i],total_cart);
+            var product_cart_info = products_splitted[i].split('|');
+            var product_id = product_cart_info[0].slice(1);
+            var quantity = product_cart_info[0].slice(-1);
+            console.log(product_id);
+            console.log(quantity);
+            var product = getProduct(product_id,quantity,total_cart);
         }
     } else {
         $('.btn-checkout').attr("disabled", true);
     }
 
-    function getProduct(idProduct, totalCart) {
+    function getProduct(idProduct,quantity,totalCart) {
+
         var url = "{% url 'product:product' id=12345 %}".replace(/12345/, parseInt(idProduct));
           $.ajax({
               url: url,
@@ -111,7 +154,7 @@
                                 <img class="img-responsive" src="media/`+data.product.cover+`" alt="prewiew" width="120" height="80">
                         </div>
                         <div class="col-12 text-center text-lg-start col-sm-12 col-md-6">
-                            <h4 class="product-name"><strong>`+data.product.name+`</strong></h4>
+                            <h5 class="product-name"><strong>`+data.product.name+`</strong></h5>
                         </div>
                         <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
                             <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
@@ -138,6 +181,9 @@
                 $('.total_price').text(total_cart);
               }
           });
+    }
+    function deleteProduct(idEntry) {
+        alert(idEntry);
     }
 </script>
 {% endif%}

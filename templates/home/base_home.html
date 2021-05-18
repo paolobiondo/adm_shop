@@ -185,7 +185,6 @@
               },
               success: function(data) {
                   data = JSON.parse(data); // converts string of json to object
-                  console.log(data);
                   if(data.success == 1) {
                     var counter = $('#lblCartCount').text();
                     if(counter) {
@@ -225,10 +224,10 @@
               if(products_splitted.includes(String(idProduct))) {
                 /* write cookie */
               } else {
-                document.cookie = "cart="+cookie_cart_products+","+idProduct;
+                document.cookie = "cart="+cookie_cart_products+",("+idProduct+"|1)";
               }
           } else {
-              document.cookie = "cart="+idProduct;
+              document.cookie = "cart=("+idProduct+"|1)";
               $('#lblCartCount').text("1");
           }
           counter_cookie_cart();

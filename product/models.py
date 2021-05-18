@@ -59,3 +59,10 @@ def update_add_cart(sender, instance, **kwargs):
     instance.cart.count += instance.quantity
     instance.cart.updated = datetime.now()
     instance.cart.save()
+
+@receiver(pre_delete, sender=Entry)
+def update_delete_cart(sender, instance, **kwargs):
+    instance.cart.total = Decimal(instance.cart.total) - Decimal(instance.quantity * instance.product.price)
+    instance.cart.count -= instance.quantity
+    instance.cart.updated = datetime.now()
+    instance.cart.save()

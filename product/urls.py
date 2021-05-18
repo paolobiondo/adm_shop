@@ -5,4 +5,5 @@ app_name = 'product'
 
 urlpatterns = [
    path('<int:id>', views.Product.as_view() ,name='product'),
+   path('cart/<int:id>', views.Cart.as_view(), name='cart'),
 ]

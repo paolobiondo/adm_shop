@@ -35,3 +35,13 @@ class Product(View):
         else:
             args['success'] = 0
         return HttpResponse(json.dumps(args))
+
+class Cart(View):
+    def post(self, request, id):
+        args = {}
+        entry = get_object_or_404(product_models.Entry, id=id)
+        args['success'] = 1
+        args['idEntry'] = id
+        entry.delete()
+        args['cart'] = product_models.Cart.objects.filter(user=request.user).values('total').first()
+        return HttpResponse(json.dumps(args))
