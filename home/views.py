@@ -17,4 +17,7 @@ class Profile(LoginRequiredMixin, View):
 class Cart(View):
     def get(self, request):
         args = {}
+        if request.user.is_authenticated:
+            args['cart'] = product_models.Cart.objects.get(user=request.user)
+            args['cart_items'] = product_models.Entry.objects.filter(cart=args['cart']).select_related()
         return render(request,'home/cart.html',args)

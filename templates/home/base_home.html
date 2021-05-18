@@ -27,12 +27,14 @@
           <div id="sidebar-responsive" class="sidebar-responsive">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <a href="{% url 'home:index' %}">Home</a>
+            {% if user.is_authenticated %}
             <a class="dropdown-item d-block d-sm-none" href="{% url 'home:profile' %}">Profile</a>
             <a class="dropdown-item d-block d-sm-none" href="#">Settings</a>
             <a class="dropdown-item d-block d-sm-none" href="{% url 'logout' %}">Logout</a>
             {% if user|is_admin_panel or user.is_superuser %}
             <a class="dropdown-item d-block d-sm-none" href="{% url 'admin_panel:index' %}">Admin</a>
             {% endif %}
+            {%endif%}
             <!-- Max 4 elements -->
           </div>
           <div class="open-sidebar-responsive">
@@ -45,7 +47,9 @@
         <div class="col-4 col-sm-5">
           <a class="cart_link" href="{% url 'home:cart' %}">
             <button class="btn btn-secondary d-inline btn-sm" type="button"><i class="fas fa fa-shopping-cart"></i></button>
+            {%if cart.count > 0%}
             <span class='badge badge-warning' id='lblCartCount'> {{cart.count}} </span>
+            {%endif%}
           </a>
           {% if user.is_authenticated %}
           <div class="dropdown d-none d-md-inline">
@@ -182,6 +186,16 @@
               success: function(data) {
                   data = JSON.parse(data); // converts string of json to object
                   console.log(data);
+                  if(data.success == 1) {
+                    var counter = $('#lblCartCount').text();
+                    if(counter) {
+                      counter = parseInt(counter);
+                      counter +=1;
+                      $('#lblCartCount').text(counter);
+                    } else {
+                      $('.cart_link').append("<span class='badge badge-warning' id='lblCartCount'>1</span>");
+                    }
+                  }
               }
           });
       }
@@ -190,6 +204,7 @@
     <script>
       function counter_cookie_cart() {
           var products = get_cookie_cart();
+          $('.cart_link').append("<span class='badge badge-warning' id='lblCartCount'></span>");
           if(cookie_cart_products!=null) {
             var products_splitted = products.split(",");
             $('#lblCartCount').show();
@@ -207,12 +222,14 @@
           cookie_cart_products = get_cookie_cart();
           if(cookie_cart_products!=null) {   
               var products_splitted = cookie_cart_products.split(",");
-              if(products_splitted.includes(idProduct) == false) {
+              if(products_splitted.includes(String(idProduct))) {
                 /* write cookie */
+              } else {
                 document.cookie = "cart="+cookie_cart_products+","+idProduct;
               }
           } else {
               document.cookie = "cart="+idProduct;
+              $('#lblCartCount').text("1");
           }
           counter_cookie_cart();
       }

@@ -2,7 +2,144 @@
 {% load static %}
 {% block title_header %}AADM E-Commerce{% endblock %}
 {% block content_base_home %}
-	
+<div class="card shopping-cart">
+    <div class="card-header bg-dark text-light position-relative">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        Shopping cart
+        <a href="{% url 'home:index' %}" class="btn btn-primary btn-sm position-absolute top-0 end-0" style="margin:5px 5px">Continue shopping</a>
+        <div class="clearfix"></div>
+    </div>
+    <div class="card-body">
+            <!-- PRODUCT -->
+            {%if user.is_authenticated%}
+                {% if cart_items %}
+                    {% for item in cart_items %}
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-2 text-center">
+                                    <img class="img-responsive" src="media/{{item.product.cover}}" alt="prewiew" width="120" height="80">
+                            </div>
+                            <div class="col-12 text-center text-lg-start col-sm-12 col-md-6">
+                                <h4 class="product-name"><strong>{{item.product.name}}</strong></h4>
+                            </div>
+                            <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+                                <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
+                                    <h6><strong>{{item.product.price}} {{currency.value}} </strong></h6>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="quantity">
+                                        <input type="button" value="+" class="plus">
+                                        <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"
+                                            size="4">
+                                        <input type="button" value="-" class="minus">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4 text-end">
+                                    <button type="button" class="btn btn-outline-danger btn-xs">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- END PRODUCT -->
+                    {%endfor%}
+                    <div class="text-end">
+                        <div class="d-inline">
+                            <a href="" class="btn btn-outline-secondary pull-right">
+                                Update shopping cart
+                            </a>
+                        </div>
+                        <div class="d-inline" style="margin: 5px">
+                            Total price: <b>{{cart.total}} {{currency.value}}</b>
+                        </div>
+                    </div>
+                {%else%}
+                    <span id="no-item-cart">NON CI SONO ITEMS</span>
+                {%endif%}
+            {%else%}
+            <div id="row_product_cart"></div>
+            <div class="text-end"></div>
+            {%endif%}
+    </div>
+    <div class="card-footer">
+        <div class="text-center" style="margin: 10px">
+            <input type="submit" href="" class="btn btn-success pull-right btn-checkout" value="Checkout">
+        </div>
+    </div>
+</div>	
 {% endblock %}
+
 {% block script_content %}
+{% if user.is_authenticated %}
+{% else %}
+<script>
+    var total_cart = 0.0
+    var products = get_cookie_cart();
+    if(products) {
+        var products_splitted = products.split(",");
+        var html = `<div class="d-inline">
+                        <a href="" class="btn btn-outline-secondary pull-right">
+                            Update shopping cart
+                        </a>
+                    </div>
+                    <div class="d-inline" style="margin: 5px">
+                        Total price: <b><span class="total_price"></span> {{currency.value}}</b>
+                    </div>`;
+        $('.text-end').append(html);
+        for (let i = 0; i < products_splitted.length; ++i) {
+            var product = getProduct(products_splitted[i],total_cart);
+        }
+    } else {
+        $('.btn-checkout').attr("disabled", true);
+    }
+
+    function getProduct(idProduct, totalCart) {
+        var url = "{% url 'product:product' id=12345 %}".replace(/12345/, parseInt(idProduct));
+          $.ajax({
+              url: url,
+              type: 'POST',
+              data:{
+                  idProduct:idProduct,
+                  cookie_cart:true,
+                  csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+              },
+              success: function(data) {
+                  data = JSON.parse(data); // converts string of json to object
+                  var html = `
+                    <div class="row" id="shopping_cart_row">
+                        <div class="col-12 col-sm-12 col-md-2 text-center">
+                                <img class="img-responsive" src="media/`+data.product.cover+`" alt="prewiew" width="120" height="80">
+                        </div>
+                        <div class="col-12 text-center text-lg-start col-sm-12 col-md-6">
+                            <h4 class="product-name"><strong>`+data.product.name+`</strong></h4>
+                        </div>
+                        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+                            <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
+                                <h6><strong>`+data.product.price+` {{currency.value}} </strong></h6>
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <div class="quantity">
+                                    <input type="button" value="+" class="plus">
+                                    <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"
+                                        size="4">
+                                    <input type="button" value="-" class="minus">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 text-end">
+                                <button type="button" class="btn btn-outline-danger btn-xs">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>`;
+                $('#row_product_cart').append(html);
+                total_cart += parseFloat(data.product.price);
+                $('.total_price').text(total_cart);
+              }
+          });
+    }
+</script>
+{% endif%}
+
 {% endblock %}
