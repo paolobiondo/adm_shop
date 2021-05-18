@@ -126,9 +126,7 @@
         for (let i = 0; i < products_splitted.length; ++i) {
             var product_cart_info = products_splitted[i].split('|');
             var product_id = product_cart_info[0].slice(1);
-            var quantity = product_cart_info[0].slice(-1);
-            console.log(product_id);
-            console.log(quantity);
+            var quantity = product_cart_info[1].slice(0,-1);
             var product = getProduct(product_id,quantity,total_cart);
         }
     } else {
@@ -146,44 +144,78 @@
                   cookie_cart:true,
                   csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
               },
-              success: function(data) {
-                  data = JSON.parse(data); // converts string of json to object
+              success: function success_ajax(data) {
+                  success_ajax.data = JSON.parse(data); // converts string of json to object
                   var html = `
-                    <div class="row" id="shopping_cart_row">
+                    <div class="row" id="shopping_cart_row-`+success_ajax.data.product.id+`">
                         <div class="col-12 col-sm-12 col-md-2 text-center">
-                                <img class="img-responsive" src="media/`+data.product.cover+`" alt="prewiew" width="120" height="80">
+                                <img class="img-responsive" src="media/`+success_ajax.data.product.cover+`" alt="prewiew" width="120" height="80">
                         </div>
                         <div class="col-12 text-center text-lg-start col-sm-12 col-md-6">
-                            <h5 class="product-name"><strong>`+data.product.name+`</strong></h5>
+                            <h5 class="product-name"><strong>`+success_ajax.data.product.name+`</strong></h5>
                         </div>
                         <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
                             <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
-                                <h6><strong>`+data.product.price+` {{currency.value}} </strong></h6>
+                                <h6><strong><span id="price-product-`+success_ajax.data.product.id+`">`+success_ajax.data.product.price+`</span> {{currency.value}} </strong></h6>
                             </div>
                             <div class="col-6 col-md-4">
                                 <div class="quantity">
                                     <input type="button" value="+" class="plus">
-                                    <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"
+                                    <input type="number" step="1" max="99" min="1" value="`+quantity+`" title="Qty" class="qty"
                                         size="4">
                                     <input type="button" value="-" class="minus">
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 text-end">
-                                <button type="button" class="btn btn-outline-danger btn-xs">
+                                <button type="button" class="btn btn-outline-danger btn-xs" onclick="deleteProduct(`+success_ajax.data.product.id+`)">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <hr>`;
+                    <hr id="hr-entry-`+success_ajax.data.product.id+`">`;
                 $('#row_product_cart').append(html);
-                total_cart += parseFloat(data.product.price);
+                total_cart += Number((parseFloat(success_ajax.data.product.price)).toFixed(2));
                 $('.total_price').text(total_cart);
               }
           });
     }
     function deleteProduct(idEntry) {
-        alert(idEntry);
+
+        var products = get_cookie_cart();
+        var products_splitted = products.split(",");
+        for (let i = 0; i < products_splitted.length; ++i) {
+            var product_cart_info = products_splitted[i].split('|');
+            var product_id = product_cart_info[0].slice(1);
+            if(idEntry == product_id) {
+                products_splitted.splice(i,1);
+            }
+        }
+        var priceProduct = parseFloat($('#price-product-'+idEntry).text());
+        var totalPriceOld = parseFloat($('.total_price').text());
+        var totalPriceNew = totalPriceOld-priceProduct;
+        $('.total_price').text(Number((totalPriceNew).toFixed(2)));
+
+        $('#shopping_cart_row-'+idEntry).remove();
+        $('#hr-entry-'+idEntry).remove();
+
+        var counter = $('#lblCartCount').text();
+        if(counter) {
+            counter = parseInt(counter);
+            if(counter==1){
+            $('#lblCartCount').hide();
+            } else {
+            counter -=1;
+            $('#lblCartCount').text(counter);
+            }
+        }
+        if(products_splitted.length>0) {
+            document.cookie = "cart="+products_splitted;
+        } else {
+            document.cookie = 'cart=; Max-Age=-99999999;';  
+            $('.text-end').remove();
+        }
+        
     }
 </script>
 {% endif%}

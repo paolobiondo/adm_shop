@@ -221,7 +221,8 @@
           cookie_cart_products = get_cookie_cart();
           if(cookie_cart_products!=null) {   
               var products_splitted = cookie_cart_products.split(",");
-              if(products_splitted.includes(String(idProduct))) {
+              console.log(products_splitted)
+              if(products_splitted.includes("("+idProduct+"|1)")) {
                 /* write cookie */
               } else {
                 document.cookie = "cart="+cookie_cart_products+",("+idProduct+"|1)";
