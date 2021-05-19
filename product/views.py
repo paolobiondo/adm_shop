@@ -35,15 +35,17 @@ class Product(LoginRequiredMixin, View):
             args['success'] = 0
         return HttpResponse(json.dumps(args))
 
-class Cart(View):
+class DeleteEntry(View):
     def get(self, request):
         return HttpResponseRedirect(reverse('home:cart'))
 
+    # Delete Entry
     def post(self, request, id):
         args = {}
         entry = get_object_or_404(product_models.Entry, id=id)
         args['success'] = 1
         args['idEntry'] = id
+        args['quantity'] = entry.quantity
         entry.delete()
         args['cart'] = product_models.Cart.objects.filter(user=request.user).values('total').first()
         return HttpResponse(json.dumps(args))

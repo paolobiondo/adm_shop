@@ -81,7 +81,7 @@
 {% if user.is_authenticated %}
 <script>
     function deleteProduct(idEntry) {
-        var url = "{% url 'product:cart' id=12345 %}".replace(/12345/, parseInt(idEntry));
+        var url = "{% url 'product:delete_entry' id=12345 %}".replace(/12345/, parseInt(idEntry));
         $.ajax({
               url: url,
               type: 'POST',
@@ -98,11 +98,10 @@
                     var counter = $('#lblCartCount').text();
                     if(counter) {
                       counter = parseInt(counter);
-                      if(counter==1){
+                      if((counter-parseInt(data.quantity) == 0) ){
                         $('#lblCartCount').hide();
                       } else {
-                        counter -=1;
-                        $('#lblCartCount').text(counter);
+                        $('#lblCartCount').text(counter-parseInt(data.quantity));
                       }
                     }
                 }
