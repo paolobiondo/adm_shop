@@ -13,7 +13,7 @@ from product import tools
 from product import models as product_models
 import product
 
-class Product(LoginRequiredMixin, View):
+class Product(View):
     def get(self, request, id):
         args = {}
         product = get_object_or_404(product_models.Product, id=id)
@@ -39,21 +39,7 @@ class Product(LoginRequiredMixin, View):
                     args['success'] = 1
         else:
             args['success'] = 0
-        return HttpResponse(json.dumps(args))
-
-class DeleteEntry(View):
-    def get(self, request):
-        return HttpResponseRedirect(reverse('home:cart'))
-
-    # Delete Entry
-    def post(self, request, id):
-        args = {}
-        entry = get_object_or_404(product_models.Entry, id=id)
-        args['success'] = 1
-        args['idEntry'] = id
-        args['quantity'] = entry.quantity
-        entry.delete()
-        args['cart'] = product_models.Cart.objects.filter(user=request.user).values('total').first()
+        print(args)
         return HttpResponse(json.dumps(args))
 
 class UpdateCart(View):
@@ -81,10 +67,33 @@ class Entry(View):
         args = {}
         products = request.POST.get('products').split(',')
         user_cart = product_models.Cart.objects.filter(user=request.user).first()
+        print(products)
         for product in products:
             idProduct = product.split('|')[0][1:]
             quantity = product .split('|')[1][:-1]
             objProduct = product_models.Product.objects.filter(id=idProduct).first()
-            entry = product_models.Entry.objects.create(product=objProduct, cart=user_cart, quantity=quantity)
+            if(product_models.Entry.objects.filter(Q(cart=user_cart, product=idProduct)).exists()):
+                entry = product_models.Entry.objects.filter(Q(cart=user_cart, product=idProduct)).first()
+                product_models.Entry.objects.filter(id=entry.id).update(quantity=(int(quantity)+int(entry.quantity)))
+                print('ciao')
+                tools_product.updateCart(entry,int(quantity))
+            else:
+                entry = product_models.Entry.objects.create(product=objProduct, cart=user_cart, quantity=quantity)
         args['success'] = 1
+        return HttpResponse(json.dumps(args))
+
+
+class DeleteEntry(View):
+    def get(self, request):
+        return HttpResponseRedirect(reverse('home:cart'))
+
+    # Delete Entry
+    def post(self, request, id):
+        args = {}
+        entry = get_object_or_404(product_models.Entry, id=id)
+        args['success'] = 1
+        args['idEntry'] = id
+        args['quantity'] = entry.quantity
+        entry.delete()
+        args['cart'] = product_models.Cart.objects.filter(user=request.user).values('total').first()
         return HttpResponse(json.dumps(args))

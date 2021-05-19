@@ -147,7 +147,8 @@
                   csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
               },
               success: function success_ajax(data) {
-                  success_ajax.data = JSON.parse(data); // converts string of json to object
+                console.log(JSON.parse(data));
+                success_ajax.data = JSON.parse(data); // converts string of json to object
                   var html = `
                     <div class="row" id="shopping_cart_row-`+success_ajax.data.product.id+`">
                         <div class="col-12 col-sm-12 col-md-2 text-center">
