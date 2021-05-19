@@ -1,13 +1,15 @@
 language: python # => 1
-    python: # => 2
-      - "3.8"
-    services: # => 3
-      - postgresql
-    env: # => 4
-      -DJANGO=3.2 DB=postgresql
-    install: # => 5
-      - pip install -r requirements.txt
-    before_script: # => 6
-      - psql -c 'create database adm;' -U postgres
-    script: # => 7
-      - python manage.py test
+python: # => 2
+  - "2.7"
+  - "3.8"
+services: # => 3
+  - postgresql
+env: # => 4
+  -DJANGO=3.2 DB=postgresql
+before_script: # => 6
+  - psql -c 'create database adm;' -U postgres
+install: # => 5
+  - pip install -r requirements.txt
+  - python manage.py migrate
+script: # => 7
+  - python manage.py test
