@@ -180,7 +180,6 @@
               url: url,
               type: 'POST',
               data:{
-                  idProduct:idProduct,
                   csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
               },
               success: function(data) {
@@ -198,6 +197,28 @@
               }
           });
       }
+
+      function cart_cookie_to_db() {
+        var products = get_cookie_cart();
+        if(products) {
+          var products_splitted = products.split(",");
+          var url = "{% url 'product:entry' %}";
+          $.ajax({
+              url: url,
+              type: 'POST',
+              data:{
+                  products:products,
+                  csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+              },
+              success: function json_success(data) {
+                  data = JSON.parse(data); // converts string of json to object
+              }
+          });
+          $('.cart_link').append("<span class='badge badge-warning' id='lblCartCount'>"+products_splitted.length+"</span>");
+          document.cookie = 'cart=; Max-Age=-99999999;';
+        }
+      }
+      cart_cookie_to_db();
     </script>
     {% else %}
     <script>

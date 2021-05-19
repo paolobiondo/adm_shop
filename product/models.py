@@ -1,7 +1,5 @@
 from django.db import models
 from django.utils.datetime_safe import datetime
-from django.db.models.signals import post_save, pre_delete
-from django.dispatch import receiver
 from django.contrib.auth.models import User
 from decimal import Decimal
 
@@ -34,7 +32,7 @@ class Category_Parents(models.Model):
         return str(self.parent)+' -> '+str(self.child)
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='cart')
     count = models.PositiveIntegerField(default=0)
     total = models.DecimalField(default=0.00, max_digits=10, decimal_places=2)
     updated = models.DateTimeField(auto_now=True)
@@ -52,17 +50,3 @@ class Entry(models.Model):
     def __str__(self):
         return "This entry contains {} {}(s).".format(self.quantity, self.product.name)
 
-
-@receiver(post_save, sender=Entry)
-def update_add_cart(sender, instance, **kwargs):
-    instance.cart.total = Decimal(instance.cart.total) + Decimal(instance.quantity * instance.product.price)
-    instance.cart.count += instance.quantity
-    instance.cart.updated = datetime.now()
-    instance.cart.save()
-
-@receiver(pre_delete, sender=Entry)
-def update_delete_cart(sender, instance, **kwargs):
-    instance.cart.total = Decimal(instance.cart.total) - Decimal(instance.quantity * instance.product.price)
-    instance.cart.count -= instance.quantity
-    instance.cart.updated = datetime.now()
-    instance.cart.save()
