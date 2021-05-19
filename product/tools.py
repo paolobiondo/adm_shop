@@ -1,4 +1,7 @@
 from product import models as products_model
+from django.utils.datetime_safe import datetime
+from decimal import Decimal
+
 def getCategories():
     categories_array = []
     categories = products_model.Category.objects.all()
@@ -18,3 +21,9 @@ def getCategories():
                 categories_array.append({'category':category,'parents':0})
 
     return categories_array
+
+def updateCart(instance,quantity_difference):
+    instance.cart.total = Decimal(instance.cart.total) + (Decimal(quantity_difference) * Decimal(instance.product.price))
+    instance.cart.count = int(instance.cart.count) + int(quantity_difference)
+    instance.cart.updated = datetime.now()
+    instance.cart.save()

@@ -9,6 +9,8 @@
         <a href="{% url 'home:index' %}" class="btn btn-primary btn-sm position-absolute top-0 end-0" style="margin:5px 5px">Continue shopping</a>
         <div class="clearfix"></div>
     </div>
+    <form  method="post" action="{% url 'product:update_cart'%}">
+    {%csrf_token%}
     <div class="card-body">
             <!-- PRODUCT -->
             {%if user.is_authenticated%}
@@ -28,7 +30,7 @@
                                 <div class="col-6 col-md-4">
                                     <div class="quantity">
                                         <input type="button" value="+" class="plus">
-                                        <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty" size="4">
+                                        <input type="number" step="1" name="quantity_{{item.id}}" max="{{item.product.units}}" min="1" value="{{item.quantity}}" title="Qty" class="qty" size="4">
                                         <input type="button" value="-" class="minus">
                                     </div>
                                 </div>
@@ -44,9 +46,9 @@
                     {%endfor%}
                     <div class="text-end">
                         <div class="d-inline">
-                            <a href="" class="btn btn-outline-secondary pull-right">
+                            <button type="submit" href="" class="btn btn-outline-secondary pull-right">
                                 Update shopping cart
-                            </a>
+                            </button>
                         </div>
                         <div class="d-inline " style="margin: 5px">
                             Total price: <b><span class="total_price">{{cart.total}}</span> {{currency.value}}</b>
@@ -60,6 +62,7 @@
             <div class="text-end"></div>
             {%endif%}
     </div>
+    </form>
     <div class="card-footer">
         <div class="text-center" style="margin: 10px">
             {% if user.is_authenticated %}
