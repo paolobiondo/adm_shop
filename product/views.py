@@ -14,6 +14,12 @@ from product import models as product_models
 import product
 
 class Product(LoginRequiredMixin, View):
+    def get(self, request, id):
+        args = {}
+        product = get_object_or_404(product_models.Product, id=id)
+        args['product'] = product
+        return render(request,'product/product.html',args)
+
     def post(self, request, id):
         args = {}
         product = get_object_or_404(product_models.Product, id=id)
