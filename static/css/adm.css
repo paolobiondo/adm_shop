@@ -178,6 +178,24 @@ h1, h2, h3, h4, h5, h6 {
   padding-bottom:20px;
 }
 
+.nav-pills .active {
+  border-left: 4px solid #8ab6d6 !important;
+  background: #fff !important;
+  color: #8ab6d6 !important; 
+}
+.nav-pills button {
+  padding:20px;
+  color: #8ab6d6;
+}
+
+.body_product {
+  margin-top:25px; 
+}
+.dropdown-item:hover {
+  background:#8ab6d6;
+}
+
+
 /* HEADER */
 .blog-header {
   line-height: 2;

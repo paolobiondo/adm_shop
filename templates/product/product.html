@@ -1,7 +1,44 @@
 {% extends 'home/base_home.html' %}
 {% load static %}
-{% block title_header %}AADM E-Commerce{% endblock %}
+{% block title_header %}{{product.name}} | ADM{% endblock %}
 {% block content_base_home %}
+<section class="breadcrumb-section" style="margin-bottom:-50px">
+  <div class="container">
+      <div class="row">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home:index'%}">Home</a></li>
+            <li class="breadcrumb-item active"><a href="#">Category</a></li>
+          </ol>
+        </nav>
+      </div>
+  </div>
+</section>
+<section class="header_product">
+    <div class="container px-4 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-10 col-sm-8 col-lg-6">
+            <img src="/media/{{product.cover}}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">{{product.name}}</h1>
+            <p class="lead">{{product.description}}</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="addToCart({{product.id}})">Add to Cart</button>
+              <button type="button" class="btn btn-outline-secondary btn-lg px-4">Watchlist</button>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+<section class="body_product">
+    <div class="container">
+        <div class="row">
+            
+        </div>
+    </div>
+</section>
+
 {% endblock %}
 {% block script_content %}
 {% endblock %}

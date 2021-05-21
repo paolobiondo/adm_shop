@@ -75,7 +75,6 @@ class Entry(View):
             if(product_models.Entry.objects.filter(Q(cart=user_cart, product=idProduct)).exists()):
                 entry = product_models.Entry.objects.filter(Q(cart=user_cart, product=idProduct)).first()
                 product_models.Entry.objects.filter(id=entry.id).update(quantity=(int(quantity)+int(entry.quantity)))
-                print('ciao')
                 tools_product.updateCart(entry,int(quantity))
             else:
                 entry = product_models.Entry.objects.create(product=objProduct, cart=user_cart, quantity=quantity)
