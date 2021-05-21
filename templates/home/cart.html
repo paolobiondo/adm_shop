@@ -10,63 +10,63 @@
         <div class="clearfix"></div>
     </div>
     <form  method="post" action="{% url 'product:update_cart'%}">
-    {%csrf_token%}
-    <div class="card-body">
-            <!-- PRODUCT -->
-            {%if user.is_authenticated%}
-                {% if cart_items %}
-                    {% for item in cart_items %}
-                        <div class="row row-entry-{{item.id}}">
-                            <div class="col-12 col-sm-12 col-md-2 text-center">
-                                    <img class="img-responsive" src="media/{{item.product.cover}}" alt="prewiew" width="120" height="80">
-                            </div>
-                            <div class="col-12 text-center text-lg-start col-sm-12 col-md-6">
-                                <h5 class="product-name"><strong>{{item.product.name}}</strong></h5>
-                            </div>
-                            <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
-                                <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
-                                    <h6><strong>{{item.product.price}} {{currency.value}} </strong></h6>
+        {%csrf_token%}
+        <div class="card-body">
+                <!-- PRODUCT -->
+                {%if user.is_authenticated%}
+                    {% if cart_items %}
+                        {% for item in cart_items %}
+                            <div class="row row-entry-{{item.id}}">
+                                <div class="col-12 col-sm-12 col-md-2 text-center">
+                                        <img class="img-responsive" src="media/{{item.product.cover}}" alt="prewiew" width="120" height="80">
                                 </div>
-                                <div class="col-6 col-md-4">
-                                    <div class="quantity">
-                                        <input type="button" value="+" class="plus">
-                                        <input type="number" step="1" name="quantity_{{item.id}}" max="{{item.product.units}}" min="1" value="{{item.quantity}}" title="Qty" class="qty" size="4">
-                                        <input type="button" value="-" class="minus">
+                                <div class="col-12 text-center text-lg-start col-sm-12 col-md-6">
+                                    <h5 class="product-name"><strong>{{item.product.name}}</strong></h5>
+                                </div>
+                                <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
+                                    <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
+                                        <h6><strong>{{item.product.price}} {{currency.value}} </strong></h6>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="quantity">
+                                            <input type="button" value="+" class="plus">
+                                            <input type="number" step="1" name="quantity_{{item.id}}" max="{{item.product.units}}" min="1" value="{{item.quantity}}" title="Qty" class="qty" size="4">
+                                            <input type="button" value="-" class="minus">
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4 text-end">
+                                        <button type="button" class="btn btn-outline-danger btn-xs" onclick="deleteProduct({{item.id}})">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="col-6 col-md-4 text-end">
-                                    <button type="button" class="btn btn-outline-danger btn-xs" onclick="deleteProduct({{item.id}})">
-                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                    </button>
-                                </div>
+                            </div>
+                            <hr class="hr-entry-{{item.id}}">
+                            <!-- END PRODUCT -->
+                        {%endfor%}
+                        <div class="text-end">
+                            <div class="d-inline">
+                                <button type="submit" href="" class="btn btn-outline-secondary pull-right">
+                                    Update shopping cart
+                                </button>
+                            </div>
+                            <div class="d-inline " style="margin: 5px">
+                                Total price: <b><span class="total_price">{{cart.total}}</span> {{currency.value}}</b>
                             </div>
                         </div>
-                        <hr class="hr-entry-{{item.id}}">
-                        <!-- END PRODUCT -->
-                    {%endfor%}
-                    <div class="text-end">
-                        <div class="d-inline">
-                            <button type="submit" href="" class="btn btn-outline-secondary pull-right">
-                                Update shopping cart
-                            </button>
-                        </div>
-                        <div class="d-inline " style="margin: 5px">
-                            Total price: <b><span class="total_price">{{cart.total}}</span> {{currency.value}}</b>
-                        </div>
-                    </div>
+                    {%else%}
+                        <span id="no-item-cart">THERE ARE NO ITEMS</span>
+                    {%endif%}
                 {%else%}
-                    <span id="no-item-cart">THERE ARE NO ITEMS</span>
+                <div id="row_product_cart"></div>
+                <div class="text-end"></div>
                 {%endif%}
-            {%else%}
-            <div id="row_product_cart"></div>
-            <div class="text-end"></div>
-            {%endif%}
-    </div>
+        </div>
     </form>
     <div class="card-footer">
         <div class="text-center" style="margin: 10px">
             {% if user.is_authenticated %}
-                <input type="submit" href="" class="btn btn-success pull-right btn-checkout" value="Checkout">
+                <input type="button" href="" class="btn btn-success pull-right btn-checkout" value="Checkout" onClick="javascript:window.location.href='{% url 'home:checkout'%}'">
             {% else %}
                 <p>You must log in to proceed</p>
                 <a class="btn btn-sm btn-primary" href="#">SIGN UP</a>

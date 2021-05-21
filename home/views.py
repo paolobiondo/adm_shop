@@ -23,3 +23,15 @@ class Cart(View):
             if(args['cart']):
                 args['cart_items'] = product_models.Entry.objects.filter(cart=args['cart']).select_related()
         return render(request,'home/cart.html',args)
+
+class Checkout(LoginRequiredMixin, View):
+    def get(self, request):
+        args = {}
+        cart_user = product_models.Cart.objects.filter(user = request.user).first()
+        args['cart'] = cart_user
+        products = product_models.Entry.objects.filter(cart = cart_user).select_related('product')
+        args["products"] = []
+        for product in products:
+            total = product.quantity*product.product.price
+            args["products"].append({'entry':product,'total':total})
+        return render(request,'home/checkout.html',args)

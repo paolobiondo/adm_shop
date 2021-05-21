@@ -6,5 +6,6 @@ app_name = 'home'
 urlpatterns = [
    path('',views.Index.as_view() ,name='index'),
    path('profile',views.Profile.as_view(), name='profile'),
-   path('cart',views.Cart.as_view(),name='cart')
+   path('cart',views.Cart.as_view(),name='cart'),
+   path('checkout',views.Checkout.as_view(), name='checkout')
 ]
