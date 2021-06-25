@@ -193,8 +193,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_DIR = BASE_DIR / 'media'
 
-# VARIABLES SETTINGS
-# ACTIVATION_REGISTRATION = True
+# SETTINGS WEBSITE
+
 
 
 #######################################
@@ -202,5 +202,7 @@ MEDIA_DIR = BASE_DIR / 'media'
 #######################################
 #
 #  Insert into Setting -> currency = € and registration = True 
+#  Add group -> admin_panel
+#  Insert into Settings -> STRIPE_PUBLIC_KEY and STRIPE_SECRET_KEY
 #
 #######################################

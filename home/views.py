@@ -4,6 +4,7 @@ from product import models as product_models
 from django.contrib.auth.mixins import LoginRequiredMixin
 from decimal import Decimal
 
+
 class Index(View):
     def get(self, request):
         args = {}

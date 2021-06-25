@@ -142,9 +142,21 @@
         </div>
       </div>
     </footer>
+    <div id="snackbar"></div>
     {% csrf_token %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   
+    <script>
+      function showSnackbar(color,text_snackbar) {
+        $('#snackbar').text(text_snackbar);
+        $('#snackbar').css('background-color',color);
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+      }
+    </script>
+
     <script>
       function openNav() {
         document.getElementById("sidebar-responsive").style.width = "250px";
@@ -195,6 +207,9 @@
                     } else {
                       $('.cart_link').append("<span class='badge badge-warning' id='lblCartCount'>1</span>");
                     }
+                    showSnackbar('#5cb85c','The product has been added successfully!');
+                  } else {
+                    showSnackbar('#d9534f','The product is already in the cart!');
                   }
               }
           });
@@ -249,15 +264,17 @@
           cookie_cart_products = get_cookie_cart();
           if(cookie_cart_products!=null) {   
               var products_splitted = cookie_cart_products.split(",");
-              console.log(products_splitted)
               if(products_splitted.includes("("+idProduct+"|1)")) {
                 /* write cookie */
+                showSnackbar('#d9534f','The product is already in the cart!');
               } else {
                 document.cookie = "cart="+cookie_cart_products+",("+idProduct+"|1)";
+                showSnackbar('#5cb85c','The product has been added successfully!');
               }
           } else {
               document.cookie = "cart=("+idProduct+"|1)";
               $('#lblCartCount').text("1");
+              showSnackbar('#5cb85c','The product has been added successfully!');
           }
           counter_cookie_cart();
       }
