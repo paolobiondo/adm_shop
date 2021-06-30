@@ -44,7 +44,7 @@ class Cart(models.Model):
         return "User: {} has {} items in their cart. Their total is ${}".format(self.user, self.count, self.total)
 
 
-class Entry(models.Model):
+class EntryCart(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()

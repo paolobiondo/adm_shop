@@ -32,10 +32,10 @@ class Product(View):
                 else:
                     quantity=1
                 user_cart = product_models.Cart.objects.get(user=request.user)
-                if(product_models.Entry.objects.filter(Q(product=product, cart=user_cart)).exists()):
+                if(product_models.EntryCart.objects.filter(Q(product=product, cart=user_cart)).exists()):
                     args['success'] = 2
                 else:  
-                    entry = product_models.Entry.objects.create(product=product, cart=user_cart, quantity=quantity)
+                    entry = product_models.EntryCart.objects.create(product=product, cart=user_cart, quantity=quantity)
                     args['success'] = 1
         else:
             args['success'] = 0
@@ -49,12 +49,12 @@ class UpdateCart(View):
     def post(self, request):
         args = {}
         user_cart = product_models.Cart.objects.filter(user=request.user).first()
-        entries = product_models.Entry.objects.filter(cart=user_cart)
+        entries = product_models.EntryCart.objects.filter(cart=user_cart)
         for entry in entries:
             quantity_edited = request.POST.get("quantity_"+str(entry.id))
             if quantity_edited.isnumeric() and int(quantity_edited) != 0:
                 quantity_difference = int(quantity_edited) - entry.quantity
-                product_models.Entry.objects.filter(id=int(entry.id)).update(quantity=int(quantity_edited))
+                product_models.EntryCart.objects.filter(id=int(entry.id)).update(quantity=int(quantity_edited))
                 tools_product.updateCart(entry,quantity_difference)
 
         return HttpResponseRedirect(reverse('home:cart'))
@@ -72,12 +72,12 @@ class Entry(View):
             idProduct = product.split('|')[0][1:]
             quantity = product .split('|')[1][:-1]
             objProduct = product_models.Product.objects.filter(id=idProduct).first()
-            if(product_models.Entry.objects.filter(Q(cart=user_cart, product=idProduct)).exists()):
-                entry = product_models.Entry.objects.filter(Q(cart=user_cart, product=idProduct)).first()
-                product_models.Entry.objects.filter(id=entry.id).update(quantity=(int(quantity)+int(entry.quantity)))
+            if(product_models.EntryCart.objects.filter(Q(cart=user_cart, product=idProduct)).exists()):
+                entry = product_models.EntryCart.objects.filter(Q(cart=user_cart, product=idProduct)).first()
+                product_models.EntryCart.objects.filter(id=entry.id).update(quantity=(int(quantity)+int(entry.quantity)))
                 tools_product.updateCart(entry,int(quantity))
             else:
-                entry = product_models.Entry.objects.create(product=objProduct, cart=user_cart, quantity=quantity)
+                entry = product_models.EntryCart.objects.create(product=objProduct, cart=user_cart, quantity=quantity)
         args['success'] = 1
         return HttpResponse(json.dumps(args))
 
@@ -89,7 +89,7 @@ class DeleteEntry(View):
     # Delete Entry
     def post(self, request, id):
         args = {}
-        entry = get_object_or_404(product_models.Entry, id=id)
+        entry = get_object_or_404(product_models.EntryCart, id=id)
         args['success'] = 1
         args['idEntry'] = id
         args['quantity'] = entry.quantity

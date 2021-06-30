@@ -11,7 +11,7 @@ from product import models as product_models
 # def add_cart(sender,instance, **kwargs):
 #     product_models.Cart.objects.create(user=instance)
 
-@receiver(post_save, sender=product_models.Entry)
+@receiver(post_save, sender=product_models.EntryCart)
 def update_add_cart(sender, instance, **kwargs):
     instance.cart.total = Decimal(instance.cart.total) + (Decimal(instance.quantity) * Decimal(instance.product.price))
     instance.cart.count = int(instance.cart.count) + int(instance.quantity)
@@ -19,7 +19,7 @@ def update_add_cart(sender, instance, **kwargs):
     instance.cart.save()
 
 
-@receiver(pre_delete, sender=product_models.Entry)
+@receiver(pre_delete, sender=product_models.EntryCart)
 def update_delete_cart(sender, instance, **kwargs):
     instance.cart.total = Decimal(instance.cart.total) - (Decimal(instance.quantity) * Decimal(instance.product.price))
     instance.cart.count -= int(instance.quantity)
