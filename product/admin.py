@@ -2,7 +2,7 @@ from django.contrib import admin
 from product.models import Product,Category,Category_Parents, Cart, EntryCart
 from django.utils.datetime_safe import datetime
 
-from product.models import Order,OrderItem
+from product.models import Order,EntryOrder
 
 
 # Register your models here.
@@ -43,4 +43,4 @@ admin.site.register(Cart)
 admin.site.register(EntryCart, EntryCartAdmin)
 
 admin.site.register(Order)
-admin.site.register(OrderItem)
+admin.site.register(EntryOrder)

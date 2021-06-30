@@ -63,6 +63,6 @@ class Order(models.Model):
     def __str__(self):
         return self.user
 
-class OrderItem(models.Model):
+class EntryOrder(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
