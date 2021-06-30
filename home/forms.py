@@ -1,5 +1,5 @@
 from django import forms
-from home.models import UserAddress
+from product.models import UserAddress
 
 class UserAddressForm(forms.Form):
     country = forms.CharField(label='country', max_length=100, required=True)

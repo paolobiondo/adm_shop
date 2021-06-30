@@ -4,7 +4,7 @@ from product import models as product_models
 from django.contrib.auth.mixins import LoginRequiredMixin
 from decimal import Decimal
 
-from home.models import UserAddress
+from product.models import UserAddress
 from home.forms import UserAddressForm
 
 class Index(View):

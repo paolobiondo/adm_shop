@@ -2,6 +2,9 @@ from django.contrib import admin
 from product.models import Product,Category,Category_Parents, Cart, Entry
 from django.utils.datetime_safe import datetime
 
+from product.models import Order,OrderItem
+
+
 # Register your models here.
 class ProductAdmin(admin.ModelAdmin):
     search_fields = ['name',]
@@ -38,3 +41,6 @@ admin.site.register(Category)
 admin.site.register(Category_Parents)
 admin.site.register(Cart)
 admin.site.register(Entry, EntryAdmin)
+
+admin.site.register(Order)
+admin.site.register(OrderItem)
