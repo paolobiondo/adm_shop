@@ -24,7 +24,7 @@ class Cart(View):
         if request.user.is_authenticated:
             args['cart'] = product_models.Cart.objects.filter(user=request.user).first()
             if(args['cart']):
-                args['cart_items'] = product_models.Entry.objects.filter(cart=args['cart']).select_related()
+                args['cart_items'] = product_models.EntryCart.objects.filter(cart=args['cart']).select_related()
         return render(request,'home/cart.html',args)
 
 class Checkout(LoginRequiredMixin, View):
