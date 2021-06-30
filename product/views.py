@@ -31,12 +31,20 @@ class Product(View):
                     quantity=request.POST.get('quantity')
                 else:
                     quantity=1
-                user_cart = product_models.Cart.objects.get(user=request.user)
+
+                try:
+                    user_cart = product_models.Cart.objects.get(user=request.user)
+                    
+                except Exception as e:
+                    user_cart = product_models.Cart.objects.create(user=request.user)
+                    
+
                 if(product_models.EntryCart.objects.filter(Q(product=product, cart=user_cart)).exists()):
                     args['success'] = 2
                 else:  
                     entry = product_models.EntryCart.objects.create(product=product, cart=user_cart, quantity=quantity)
                     args['success'] = 1
+
         else:
             args['success'] = 0
         print(args)

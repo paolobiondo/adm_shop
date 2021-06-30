@@ -34,7 +34,7 @@ class Checkout(LoginRequiredMixin, View):
 
         cart_user = product_models.Cart.objects.filter(user = request.user).first()
         args['cart'] = cart_user
-        products = product_models.Entry.objects.filter(cart = cart_user).select_related('product')
+        products = product_models.EntryCart.objects.filter(cart = cart_user).select_related('product')
         args["products"] = []
         for product in products:
             total = product.quantity*product.product.price
