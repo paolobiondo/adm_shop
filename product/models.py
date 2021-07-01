@@ -65,7 +65,7 @@ class Order(models.Model):
         return "#"+str(self.id)+": "+str(self.user)
 
 class EntryOrder(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="entryOrder")
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     quantity = models.PositiveIntegerField(default=1)
 

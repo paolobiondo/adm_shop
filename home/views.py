@@ -19,6 +19,12 @@ class Profile(LoginRequiredMixin, View):
         args = {}
         return render(request,'home/profile.html',args)
 
+class Orders(LoginRequiredMixin, View):
+    def get(self, request):
+        args = {}
+        args['orders'] = product_models.Order.objects.filter(user=request.user)
+        return render(request,'home/orders.html',args)
+
 class Cart(View):
     def get(self, request):
         args = {}

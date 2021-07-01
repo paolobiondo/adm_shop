@@ -64,6 +64,16 @@ h1, h2, h3, h4, h5, h6 {
   color: #fbe0c4 !important;
 }
 
+.text-muted-white {
+  color: rgba(53,53,53,0.45) !important;
+}
+
+.button-orders {
+  padding:8px;
+  text-align:center;
+  width:12em;
+}
+
 .bg-light {
   background: #8ab6d6 !important;
 }
@@ -204,10 +214,18 @@ h1, h2, h3, h4, h5, h6 {
   color: rgba(53,53,53,0.4) !important;
 }
 
+
+
 /* HEADER */
 .blog-header {
   line-height: 2;
   background: #0061a8;
+}
+
+.orders-table {
+  background: #fff;
+  padding:20px;
+  border: 1px solid rgba(53,53,53,0.15);
 }
 
 
