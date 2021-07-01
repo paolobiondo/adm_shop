@@ -34,8 +34,12 @@
         <main class="container">
             {% if success == 1 %}
                 You completed the order successfully!!
+                <br>
+                <a href="{% url 'home:index' %}">Go Home</a>
             {% elif success == 2 %}
                 You made a mistake!
+                <br>
+                <a href="{% url 'home:index' %}">Go Home</a>
             {% else %}
             <div class="row g-5">
             {% if products %}
@@ -251,6 +255,9 @@
                     No Products found in the Shopping cart!
                     <br>
                     <a href="{% url 'home:index' %}">Go Home</a>
+                    <script type="text/javascript">
+                        window.location = "{% url 'home:index'%}";
+                    </script>
                 </p>
             {% endif %}
             </div>

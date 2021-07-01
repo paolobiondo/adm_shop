@@ -68,7 +68,7 @@
             {% if user.is_authenticated %}
                 {% if cart_items %}
                 <input type="button" href="" class="btn btn-success pull-right btn-checkout" value="Checkout" onClick="javascript:window.location.href='{% url 'home:checkout'%}'">
-                {% endif s%}
+                {% endif %}
             {% else %}
                 <p>You must log in to proceed</p>
                 <a class="btn btn-sm btn-primary" href="#">SIGN UP</a>

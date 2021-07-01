@@ -49,8 +49,13 @@ class Checkout(LoginRequiredMixin, View):
         args = {}
         address_form = UserAddressForm(request.POST)
         if address_form.is_valid():
-            user_address = UserAddress()
-            user_address.user = request.user
+            #check if billing shipping address exists
+            if(UserAddress.objects.filter(Q(user=request.user, type="shipping")).exists()):
+                user_address = UserAddress.objects.filter(Q(user=request.user, type="shipping")).first()
+            else:
+                user_address = UserAddress()
+                user_address.user = request.user
+
             user_address.country = address_form.cleaned_data['country']
             user_address.name = address_form.cleaned_data['name']
             user_address.surname = address_form.cleaned_data['surname']
@@ -59,9 +64,14 @@ class Checkout(LoginRequiredMixin, View):
             user_address.zip_address = address_form.cleaned_data['zip_address']
             user_address.telephone = address_form.cleaned_data['telephone']
             user_address.save()
+
             if(request.POST['same_address']=="on"):
-                user_address_billing = UserAddress()
-                user_address_billing.user = request.user
+                if(UserAddress.objects.filter(Q(user=request.user, type="billing")).exists()):
+                    user_address_billing = UserAddress.objects.filter(Q(user=request.user, type="billing")).first()
+                else:
+                    user_address_billing = UserAddress()
+                    user_address_billing.user = request.user
+
                 user_address_billing.country = address_form.cleaned_data['country']
                 user_address_billing.name = address_form.cleaned_data['name']
                 user_address_billing.surname = address_form.cleaned_data['surname']

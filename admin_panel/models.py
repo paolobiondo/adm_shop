@@ -15,7 +15,7 @@ class UserAddress(models.Model):
     type = models.CharField(default="shipping", max_length=20)
 
     def __str__(self):
-        return self.user.username
+        return str(self.user.username)+" : "+str(self.type)
 
 class Setting(models.Model):
     setting = models.TextField(max_length=150)

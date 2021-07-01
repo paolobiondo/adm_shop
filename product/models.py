@@ -53,9 +53,9 @@ class EntryCart(models.Model):
         return "This entry contains {} {}(s).".format(self.quantity, self.product.name)
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    billing_address = models.ForeignKey(UserAddress, on_delete=models.CASCADE, related_name="billingaddressorder")
-    shipping_address = models.ForeignKey(UserAddress, on_delete=models.CASCADE, related_name="shippingaddressorder")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    billing_address = models.ForeignKey(UserAddress, on_delete=models.SET_NULL, related_name="billingaddressorder", null=True)
+    shipping_address = models.ForeignKey(UserAddress, on_delete=models.SET_NULL, related_name="shippingaddressorder", null=True)
     units = models.IntegerField()
     total = models.DecimalField(max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -66,7 +66,7 @@ class Order(models.Model):
 
 class EntryOrder(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
