@@ -66,7 +66,7 @@
                         <div class="row g-3">
                             <div class="col-sm-6">
                             <label for="id_name" class="form-label">First name</label>
-                            <input type="text" class="form-control" name="name" id="id_name" maxlength="50" placeholder="" value="" required>
+                            <input type="text" class="form-control" name="name" id="id_name" maxlength="50" placeholder="" value="{{billingAddress.name}}" required>
                             <div class="invalid-feedback">
                                 Valid first name is required.
                             </div>
@@ -74,7 +74,7 @@
 
                             <div class="col-sm-6">
                             <label for="id_surname" class="form-label">Last name</label>
-                            <input type="text" class="form-control" name="surname" id="id_surname" maxlength="50" placeholder="" value="" required>
+                            <input type="text" class="form-control" name="surname" id="id_surname" maxlength="50" placeholder="" value="{{billingAddress.surname}}" required>
                             <div class="invalid-feedback">
                                 Valid last name is required.
                             </div>
@@ -82,7 +82,7 @@
 
                             <div class="col-12">
                             <label for="id_address" class="form-label">Address</label>
-                            <input type="text" class="form-control" name="address" id="id_address" placeholder="1234 Main St" required>
+                            <input type="text" class="form-control" name="address" id="id_address" value="{{billingAddress.address}}" placeholder="1234 Main St" required>
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
                             </div>
@@ -90,10 +90,7 @@
 
                             <div class="col-md-5">
                             <label for="id_country" class="form-label">Country</label>
-                            <select class="form-select" id="id_country" name="country" required>
-                                <option value="">Choose...</option>
-                                <option value="United States">United States</option>
-                            </select>
+                            <input type="text" class="form-control" name="country" id="id_country" value="{{billingAddress.country}}" placeholder="Italy" required>
                             <div class="invalid-feedback">
                                 Please select a valid country.
                             </div>
@@ -101,7 +98,7 @@
 
                             <div class="col-md-4">
                             <label for="id_city" class="form-label">City</label>
-                            <input type="text" class="form-control" name="city" id="id_city" placeholder="Rome" required>
+                            <input type="text" class="form-control" name="city" id="id_city" placeholder="Rome" value="{{billingAddress.city}}" required>
                             <div class="invalid-feedback">
                                 Please enter your city
                             </div>
@@ -109,7 +106,7 @@
 
                             <div class="col-md-3">
                             <label for="id_zip_address" class="form-label">Zip</label>
-                            <input type="text" class="form-control" name="zip_address" id="id_zip_address" placeholder="00154" required>
+                            <input type="text" class="form-control" name="zip_address" id="id_zip_address" value="{{billingAddress.zip_address}}" placeholder="00154" required>
                             <div class="invalid-feedback">
                                 Zip code required.
                             </div>
@@ -127,7 +124,7 @@
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                 <label for="firstName" class="form-label">First name</label>
-                                <input type="text" class="form-control" id="shippingfirstname" placeholder="" value="">
+                                <input type="text" class="form-control" name="shippingname" id="shippingfirstname" value="{{shippingAddress.name}}" placeholder="" value="">
                                 <div class="invalid-feedback">
                                     Valid first name is required.
                                 </div>
@@ -135,7 +132,7 @@
 
                                 <div class="col-sm-6">
                                 <label for="lastName" class="form-label">Last name</label>
-                                <input type="text" class="form-control" id="shippinglastname" placeholder="" value="">
+                                <input type="text" class="form-control" name="shippingsurname" id="shippinglastname" value="{{shippingAddress.surname}}" placeholder="" value="">
                                 <div class="invalid-feedback">
                                     Valid last name is required.
                                 </div>
@@ -143,7 +140,7 @@
 
                                 <div class="col-12">
                                 <label for="address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="shippingaddress" placeholder="1234 Main St">
+                                <input type="text" class="form-control" name="shippingaddress" id="shippingaddress" value="{{shippingAddress.address}}" placeholder="1234 Main St">
                                 <div class="invalid-feedback">
                                     Please enter your shipping address.
                                 </div>
@@ -151,10 +148,7 @@
 
                                 <div class="col-md-5">
                                 <label for="country" class="form-label">Country</label>
-                                <select class="form-select" id="shippingountry">
-                                    <option value="">Choose...</option>
-                                    <option value="United States">United States</option>
-                                </select>
+                                <input type="text" class="form-control" name="shippingcountry" id="shippingcountry" value="{{shippingAddress.country}}" placeholder="Italy">
                                 <div class="invalid-feedback">
                                     Please select a valid country.
                                 </div>
@@ -162,7 +156,7 @@
 
                                 <div class="col-md-4">
                                 <label for="address" class="form-label">City</label>
-                                <input type="text" class="form-control" id="shippingcity" placeholder="Rome">
+                                <input type="text" class="form-control" name="shippingcity" id="shippingcity" value="{{shippingAddress.city}}" placeholder="Rome">
                                 <div class="invalid-feedback">
                                     Please enter your city
                                 </div>
@@ -170,7 +164,7 @@
 
                                 <div class="col-md-3">
                                 <label for="zip" class="form-label">Zip</label>
-                                <input type="text" class="form-control" id="shippingzip" placeholder="00154">
+                                <input type="text" class="form-control" name="shippingzipaddress" id="shippingzip" value="{{shippingAddress.zip_address}}" placeholder="00154">
                                 <div class="invalid-feedback">
                                     Zip code required.
                                 </div>

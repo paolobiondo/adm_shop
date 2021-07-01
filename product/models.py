@@ -54,15 +54,21 @@ class EntryCart(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    user_address = models.ForeignKey(UserAddress, on_delete=models.CASCADE)
+    billing_address = models.ForeignKey(UserAddress, on_delete=models.CASCADE, related_name="billingaddressorder")
+    shipping_address = models.ForeignKey(UserAddress, on_delete=models.CASCADE, related_name="shippingaddressorder")
     units = models.IntegerField()
     total = models.DecimalField(max_digits=10, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.user
+        return "#"+str(self.id)+": "+str(self.user)
 
 class EntryOrder(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return "#"+str(self.id)+": "+str(self.product)+" -> "+str(self.order)+" ("+str(self.quantity)+")"
+ 
