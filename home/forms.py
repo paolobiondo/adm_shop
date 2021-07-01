@@ -8,5 +8,5 @@ class UserAddressForm(forms.Form):
     address =  forms.CharField(widget=forms.Textarea, required=True)
     city = forms.CharField(label='city', max_length=100, required=True)
     zip_address = forms.CharField(label='zipaddress', max_length=100, required=True)
-    telephone = forms.CharField(label='telephone', max_length=100)
-    instruction =  forms.CharField(widget=forms.Textarea)
+    telephone = forms.CharField(label='telephone', max_length=100, required=False)
+    instruction =  forms.CharField(widget=forms.Textarea, required=False)

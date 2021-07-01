@@ -34,7 +34,6 @@ class Checkout(LoginRequiredMixin, View):
         args['form'] = UserAddressForm()
         args['shippingAddress'] = UserAddress.objects.filter(Q(user=request.user,type="shipping")).first()
         args['billingAddress'] = UserAddress.objects.filter(Q(user=request.user,type="billing")).first()
-        print(args['shippingAddress'])
         cart_user = product_models.Cart.objects.filter(user = request.user).first()
         args['cart'] = cart_user
         products = product_models.EntryCart.objects.filter(cart = cart_user).select_related('product')

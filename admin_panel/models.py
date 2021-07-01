@@ -10,8 +10,8 @@ class UserAddress(models.Model):
     address = models.TextField()
     city = models.CharField(max_length=60)
     zip_address = models.CharField(max_length=10)
-    telephone = models.CharField(max_length=20, blank=True)
-    instruction = models.TextField(blank=True)
+    telephone = models.CharField(max_length=20, blank=True, null=True)
+    instruction = models.TextField(blank=True, null=True)
     type = models.CharField(default="shipping", max_length=20)
 
     def __str__(self):
