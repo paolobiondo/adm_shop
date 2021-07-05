@@ -16,12 +16,11 @@
                     {% endif %}
                     <br> 
                     <span class="text-muted-white">Total: {{order.total}}{{currency.value}}</span> </div>
-                <div class="col-md-4 themed-grid-col">
+                <div class="col-md-4 themed-grid-col mt-3 mt-sm-2">
                     {% if order.status == "payment" %}
-                    <a href="{% url 'home:payment' id=order.id %}"><div class="btn-primary button-orders">Pay Now</div></a>
-                    {% elif order.status == "shipping" %}
-                    <div class="btn-primary button-orders">Show Order</div>
+                    <a href="{% url 'home:payment' id=order.id %}"><span class="btn-secondary button-orders">Pay Now</span></a>
                     {% endif %}
+                    <span class="btn-primary button-orders">Show Order</span>
                 </div>
             </div>
         {% endfor %}
