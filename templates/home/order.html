@@ -1,8 +1,18 @@
 {% extends 'home/base_profile.html' %}
 {% load static %}
-{% block title_header %}Orders | ADM {% endblock %}
+{% block title_header %}Order #{{order.id}} | ADM {% endblock %}
 {%block content_profile%}
-<h3>Order #{{order.id}}</h3>
+<a href="{% url 'home:orders' %}">Go Back</a>
+<br>
+<h3>Order #{{order.id}}                     
+    {% if order.status == "payment" %}
+    <span class="text_small red">In attesa di Pagamento</span>
+    {% elif order.status == "paid" %}
+    <span class="text_small">In attesa di spedizione</span>
+    {% elif order.status == "shipped" %}
+    <span>Ordine spedito</span>
+    {% endif %}
+</h3>
 <div class="mt-4 mt-sm-4 mt-md-0">
     {% for entryOrder in orderProducts%}
     <div class="row mb-3 orders-table"> 
