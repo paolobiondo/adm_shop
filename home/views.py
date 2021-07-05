@@ -32,6 +32,14 @@ class Orders(LoginRequiredMixin, View):
         args['orders'] = product_models.Order.objects.filter(user=request.user).order_by('-timestamp')
         return render(request,'home/orders.html',args)
 
+class Order(LoginRequiredMixin, View):
+    def get(self, request, id):
+        args = {}
+        order = product_models.Order.objects.filter(id=id).first()
+        args['order'] = order
+        args['orderProducts'] = product_models.EntryOrder.objects.filter(order=order.id).select_related('product')
+        return render(request,'home/order.html',args)
+
 class Cart(View):
     def get(self, request):
         args = {}

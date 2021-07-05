@@ -20,7 +20,7 @@
                     {% if order.status == "payment" %}
                     <a href="{% url 'home:payment' id=order.id %}"><span class="btn-secondary button-orders">Pay Now</span></a>
                     {% endif %}
-                    <span class="btn-primary button-orders">Show Order</span>
+                    <a href="{% url 'home:order' id=order.id %}"><span class="btn-primary button-orders">Show Order</span></a>
                 </div>
             </div>
         {% endfor %}

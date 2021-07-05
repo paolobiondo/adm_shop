@@ -9,6 +9,8 @@ urlpatterns = [
    path('cart',views.Cart.as_view(),name='cart'),
    path('checkout',views.Checkout.as_view(), name='checkout'),
    path('orders',views.Orders.as_view(), name="orders"),
+   path('order/<int:id>',views.Order.as_view(), name="order"),
+
    #payment
    path('payment/<int:id>',views.Payment.as_view(), name="payment"),
    path('success/<int:id>',views.Success.as_view(), name="success"),

@@ -1,0 +1,49 @@
+{% extends 'home/base_profile.html' %}
+{% load static %}
+{% block title_header %}Orders | ADM {% endblock %}
+{%block content_profile%}
+<h3>Order #{{order.id}}</h3>
+<div class="mt-4 mt-sm-4 mt-md-0">
+    {% for entryOrder in orderProducts%}
+    <div class="row mb-3 orders-table"> 
+        <div class="col-12 col-sm-12 col-md-3 col-lg-2 themed-grid-col">
+            <img data-src="/media/{{entryOrder.product.cover}}" src="/media/{{entryOrder.product.cover}}" width="100">
+        </div>
+        <div class="col-12 col-sm-12 col-md-9 col-lg-10 themed-grid-col mt-3 mt-sm-2">
+            {{entryOrder.product.name}}
+            <br />
+            <span class="text-muted-white">Quantity: {{entryOrder.quantity}}</span>
+        </div>
+    </div>
+    {% endfor %}
+    <div>
+        <div class="row mb-3"> 
+            <div class="col-12 col-sm-12 col-md-5 orders-table" style="margin: 0 auto;">
+                <h6>Shipping Address</h6>
+                {{order.billing_address.name}} {{order.billing_address.surname}}
+                <br>
+                {{order.billing_address.address}}
+                <br>
+                {{order.billing_address.city}}, {{order.billing_address.zip_address}}, {{order.billing_address.country}}
+                <br>
+                {{order.billing_address.telephone}}
+            </div>
+            <div class="col-12 col-sm-12 col-md-5 orders-table mt-3 mt-md-0 ms-md-2" style="margin: 0 auto;">
+                <h6>Billing Address</h6>
+                {{order.shipping_address.name}} {{order.shipping_address.surname}}
+                <br>
+                {{order.shipping_address.address}}
+                <br>
+                {{order.shipping_address.city}}, {{order.shipping_address.zip_address}}, {{order.shipping_address.country}}
+                <br>
+                {{order.shipping_address.telephone}}
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+{% block script_content %}
+<script>
+    $('.list-group-item-orders').addClass('active');
+</script>
+{% endblock %}
