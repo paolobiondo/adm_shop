@@ -1,18 +1,33 @@
 {% extends 'home/base_profile.html' %}
 {% load static %}
-{% block title_header %}{{user.username}} | ADM {% endblock %}
+{% block title_header %}Orders | ADM {% endblock %}
 {%block content_profile%}
 <div class="mt-4 mt-sm-4 mt-md-0">
-    {%for order in orders %}
-    {{order.entryOrder}}
-    {% for product in order.entryOrder %}
-        a
-    {% endfor %}
-        <div class="row mb-3 orders-table">
-            <div class="col-md-8 themed-grid-col">Order #{{order.id}} <br> <span class="text-muted-white">Total: {{order.total}}{{currency.value}}</span></div>
-            <div class="col-md-4 themed-grid-col"><div class="btn-primary button-orders">Delete Order</div></div>
-        </div>
-    {% endfor %}
+    {% if orders %}
+        {%for order in orders %}
+            <div class="row mb-3 orders-table"> 
+                <div class="col-md-8 themed-grid-col">Order #{{order.id}}  - 
+                    {% if order.status == "payment" %}
+                    <span class="red">In attesa di Pagamento</span>
+                    {% elif order.status == "paid" %}
+                    <span>In attesa di spedizione</span>
+                    {% elif order.status == "shipped" %}
+                    <span>Ordine spedito</span>
+                    {% endif %}
+                    <br> 
+                    <span class="text-muted-white">Total: {{order.total}}{{currency.value}}</span> </div>
+                <div class="col-md-4 themed-grid-col">
+                    {% if order.status == "payment" %}
+                    <a href="{% url 'home:payment' id=order.id %}"><div class="btn-primary button-orders">Pay Now</div></a>
+                    {% elif order.status == "shipping" %}
+                    <div class="btn-primary button-orders">Show Order</div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <span>None order has been made!</span>
+    {% endif %}
 </div>
 {%endblock%}
 {% block script_content %}

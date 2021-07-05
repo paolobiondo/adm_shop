@@ -8,8 +8,10 @@ def home_data(request):
     args = {}
     if(admin_panel_models.Setting.objects.filter(setting='currency').exists()):
         args['currency'] = admin_panel_models.Setting.objects.get(setting='currency')
-
     else:
+        admin_panel_models.Setting.objects.create(setting='STRIPE_SECRET_KEY',value='0')
+        admin_panel_models.Setting.objects.create(setting='STRIPE_PUBLISHABLE_KEY',value='0')
+        admin_panel_models.Setting.objects.create(setting='STRIPE_ENDPOINT_SECRET', value='0')
         admin_panel_models.Setting.objects.create(setting='currency',value='€')
         args['currency'] = admin_panel_models.Setting.objects.get(setting='currency')
         admin_panel = Group.objects.get_or_create(name='admin_panel')

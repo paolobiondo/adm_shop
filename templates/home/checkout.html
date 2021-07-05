@@ -29,14 +29,9 @@
         </div>
       </div>
     </header>
-
     <div class="container clear_row" style="margin-top:50px;">
         <main class="container">
-            {% if success == 1 %}
-                You completed the order successfully!!
-                <br>
-                <a href="{% url 'home:index' %}">Go Home</a>
-            {% elif success == 2 %}
+            {% if success == 2 %}
                 You made a mistake!
                 <br>
                 <a href="{% url 'home:index' %}">Go Home</a>
@@ -247,7 +242,7 @@
                         </div> -->
                         <span style="color:#d9534f">* mandatory fields</span>
                         <hr class="my-4">
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">Proceed to Payment</button>
                     </form>
                 </div>
             {% else %}

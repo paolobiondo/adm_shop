@@ -20,6 +20,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* COMPONENTS */
+.red {
+   color: #d9534f;
+}
+
 .main-color {
   color: #0061a8;
 }
