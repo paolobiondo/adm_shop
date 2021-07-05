@@ -18,6 +18,7 @@ class Product(View):
         args = {}
         product = get_object_or_404(product_models.Product, id=id)
         args['product'] = product
+        args['cat'] = product_models.Category.objects.filter(slug=product.category).first()
         return render(request,'product/product.html',args)
 
     def post(self, request, id):

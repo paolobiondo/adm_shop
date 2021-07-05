@@ -4,11 +4,13 @@
 {% block content_base_home %}
 <section class="breadcrumb-section" style="margin-bottom:-50px">
   <div class="container">
-      <div class="row">
+      <div class="row row_breadcrumb">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'home:index'%}">Home</a></li>
-            <li class="breadcrumb-item active"><a href="#">Category</a></li>
+            {% if cat %}
+            <li class="breadcrumb-item active"><a href="{% url 'home:category' slug=cat.slug %}">{{cat.name}}</a></li>
+            {% endif %}
           </ol>
         </nav>
       </div>

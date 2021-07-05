@@ -143,6 +143,13 @@ class Cancelled(LoginRequiredMixin, View):
         args = {}
         return render(request,'home/cancelled.html', args)
 
+class Category(LoginRequiredMixin, View):
+    def get(self, request, slug):
+        args = {}
+        args['cat'] = get_object_or_404(product_models.Category, slug=slug)
+        args['cat_items'] =  product_models.Product.objects.filter(category = slug)
+        return render(request,'home/category.html', args)
+
 @csrf_exempt
 def stripe_config(request):
     if request.method == 'GET':

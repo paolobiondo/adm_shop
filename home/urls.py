@@ -10,6 +10,7 @@ urlpatterns = [
    path('checkout',views.Checkout.as_view(), name='checkout'),
    path('orders',views.Orders.as_view(), name="orders"),
    path('order/<int:id>',views.Order.as_view(), name="order"),
+   path('cat/<str:slug>', views.Category.as_view(), name="category"),
 
    #payment
    path('payment/<int:id>',views.Payment.as_view(), name="payment"),

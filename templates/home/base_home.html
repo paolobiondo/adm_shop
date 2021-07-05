@@ -81,7 +81,7 @@
     <div class="nav-scroller box-shadow">
       <nav class="nav nav-underline justify-content-md-center navbar-custom">
         {% for category in menu_categories %}
-          <a class="nav-link" href="#{{category.category.slug}}">{{category.category.name}}</a>
+          <a class="nav-link" href="{% url 'home:category' slug=category.category.slug%}">{{category.category.name}}</a>
         {% endfor %}
       </nav>
     </div>
