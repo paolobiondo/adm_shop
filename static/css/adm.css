@@ -24,6 +24,10 @@ h1, h2, h3, h4, h5, h6 {
    color: #d9534f !important;
 }
 
+.red_bg {
+  background: #d9534f !important;
+}
+
 .main-color {
   color: #0061a8;
 }
