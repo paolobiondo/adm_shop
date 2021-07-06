@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
 from admin_panel.models import UserAddress
-from home.forms import UserAddressForm
+from home.forms import UserAddressForm, UserAddressShippingForm
 from product import models as product_models
 from admin_panel.models import Setting
 
@@ -53,6 +53,8 @@ class Checkout(LoginRequiredMixin, View):
     def get(self, request):
         args = {}
         args['form'] = UserAddressForm()
+        args['form_shipping'] = UserAddressShippingForm()
+
         args['shippingAddress'] = UserAddress.objects.filter(Q(user=request.user,type="shipping")).first()
         args['billingAddress'] = UserAddress.objects.filter(Q(user=request.user,type="billing")).first()
         cart_user = product_models.Cart.objects.filter(user = request.user).first()
@@ -69,11 +71,12 @@ class Checkout(LoginRequiredMixin, View):
     def post(self,request):
         args = {}
         address_form = UserAddressForm(request.POST)
+        address_form_shipping = UserAddressShippingForm(request.POST)
 
-        if address_form.is_valid():
+        if address_form.is_valid() and address_form_shipping.is_valid():
             #check if billing shipping address exists
-            if(UserAddress.objects.filter(Q(user=request.user, type="shipping")).exists()):
-                user_address = UserAddress.objects.filter(Q(user=request.user, type="shipping")).first()
+            if(UserAddress.objects.filter(Q(user=request.user, type="billing")).exists()):
+                user_address = UserAddress.objects.filter(Q(user=request.user, type="billing")).first()
             else:
                 user_address = UserAddress()
                 user_address.user = request.user
@@ -85,29 +88,47 @@ class Checkout(LoginRequiredMixin, View):
             user_address.city = address_form.cleaned_data['city']
             user_address.zip_address = address_form.cleaned_data['zip_address']
             user_address.telephone = address_form.cleaned_data['telephone']
+            user_address.instruction = address_form.cleaned_data['instruction']
+            user_address.type="billing"
             user_address.save()
 
-            if(request.POST['same_address']=="on"):
-                if(UserAddress.objects.filter(Q(user=request.user, type="billing")).exists()):
-                    user_address_billing = UserAddress.objects.filter(Q(user=request.user, type="billing")).first()
+            if(request.POST.get('same_address')=="on"):
+                if(UserAddress.objects.filter(Q(user=request.user, type="shipping")).exists()):
+                    user_address_shipping = UserAddress.objects.filter(Q(user=request.user, type="shipping")).first()
                 else:
-                    user_address_billing = UserAddress()
-                    user_address_billing.user = request.user
+                    user_address_shipping = UserAddress()
+                    user_address_shipping.user = request.user
 
-                user_address_billing.country = address_form.cleaned_data['country']
-                user_address_billing.name = address_form.cleaned_data['name']
-                user_address_billing.surname = address_form.cleaned_data['surname']
-                user_address_billing.address = address_form.cleaned_data['address']
-                user_address_billing.city = address_form.cleaned_data['city']
-                user_address_billing.zip_address = address_form.cleaned_data['zip_address']
-                user_address_billing.telephone = address_form.cleaned_data['telephone']
-                user_address_billing.type="billing"
-                user_address_billing.save()
+                user_address_shipping.country = address_form.cleaned_data['country']
+                user_address_shipping.name = address_form.cleaned_data['name']
+                user_address_shipping.surname = address_form.cleaned_data['surname']
+                user_address_shipping.address = address_form.cleaned_data['address']
+                user_address_shipping.city = address_form.cleaned_data['city']
+                user_address_shipping.zip_address = address_form.cleaned_data['zip_address']
+                user_address_shipping.telephone = address_form.cleaned_data['telephone']
+                user_address_shipping.instruction = address_form.cleaned_data['instruction']
+                user_address_shipping.save()
+            else:
+                if(UserAddress.objects.filter(Q(user=request.user, type="shipping")).exists()):
+                    user_address_shipping = UserAddress.objects.filter(Q(user=request.user, type="shipping")).first()
+                else:
+                    user_address_shipping = UserAddress()
+                    user_address_shipping.user = request.user
+
+                user_address_shipping.country = address_form_shipping.cleaned_data['country_shipping']
+                user_address_shipping.name = address_form_shipping.cleaned_data['name_shipping']
+                user_address_shipping.surname = address_form_shipping.cleaned_data['surname_shipping']
+                user_address_shipping.address = address_form_shipping.cleaned_data['address_shipping']
+                user_address_shipping.city = address_form_shipping.cleaned_data['city_shipping']
+                user_address_shipping.zip_address = address_form_shipping.cleaned_data['zip_address_shipping']
+                user_address_shipping.telephone = address_form.cleaned_data['telephone']
+                user_address_shipping.instruction = address_form.cleaned_data['instruction']
+                user_address_shipping.save()
 
             cart_user = product_models.Cart.objects.filter(user = request.user).first()
             entriesCart = product_models.EntryCart.objects.filter(cart=cart_user)
        
-            newOrder = product_models.Order.objects.create(user=request.user,billing_address=user_address_billing,shipping_address=user_address,units=0,total=0,status="payment")
+            newOrder = product_models.Order.objects.create(user=request.user,billing_address=user_address,shipping_address=user_address_shipping,units=0,total=0,status="payment")
             totalOrder = 0
             totalUnits = 0
             for entryCart in entriesCart:
