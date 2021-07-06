@@ -40,6 +40,12 @@ class Order(LoginRequiredMixin, View):
         args['orderProducts'] = product_models.EntryOrder.objects.filter(order=order.id).select_related('product')
         return render(request,'home/order.html',args)
 
+class Settings(LoginRequiredMixin, View):
+    def get(self, request):
+        args = {}
+
+        return render(request,'home/settings.html',args)
+
 class Cart(View):
     def get(self, request):
         args = {}

@@ -11,6 +11,7 @@ urlpatterns = [
    path('orders',views.Orders.as_view(), name="orders"),
    path('order/<int:id>',views.Order.as_view(), name="order"),
    path('cat/<str:slug>', views.Category.as_view(), name="category"),
+   path('settings', views.Settings.as_view(), name="settings"),
 
    #payment
    path('payment/<int:id>',views.Payment.as_view(), name="payment"),
