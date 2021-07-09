@@ -19,7 +19,7 @@ class UserAddress(models.Model):
 
 class Setting(models.Model):
     setting = models.TextField(max_length=150)
-    value = models.TextField(max_length=150)
+    value = models.TextField(max_length=150, default="0")
 
     def __str__(self):
         return self.setting
