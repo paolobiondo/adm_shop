@@ -16,7 +16,6 @@ from admin_panel.models import Setting
 
 class Index(View):
     def get(self, request):
-        STRIPE_PUBLISHABLE_KEY = Setting.objects.filter(setting="STRIPE_PUBLISHABLE_KEY").first().value
         args = {}
         args['products'] = product_models.Product.objects.all()
         return render(request,'home/index.html',args)
