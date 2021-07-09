@@ -106,26 +106,46 @@ WSGI_APPLICATION = 'adm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
+if DEBUG:
+    DATABASES = {
 
-    'default': {
+        'default': {
 
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'adm',
+            'NAME': 'adm',
 
-        'USER': 'postgres',
+            'USER': 'postgres',
 
-        'PASSWORD': '',
+            'PASSWORD': '',
 
-        'HOST': 'localhost',
+            'HOST': 'localhost',
 
-        'PORT': '5432',
+            'PORT': '5432',
+
+        }
 
     }
+else:
+    DATABASES = {
 
-}
+        'default': {
 
+            'ENGINE': 'django.db.backends.mysql',
+
+            'NAME': '...',
+
+            'USER': '...',
+
+            'PASSWORD': '...',
+
+            'HOST': 'admshop.mysql.pythonanywhere-services.com',
+
+            'PORT': '3306',
+
+        }
+
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
