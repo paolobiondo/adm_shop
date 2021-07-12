@@ -1,9 +1,9 @@
 # ADM Shop
 
 An Ecommerce built in Django
-WORKING IN PROGRESS
+**WORKING IN PROGRESS**
 
-FEATURES
+**FEATURES**
 - Product added to cart are inserted into the DB if the user is logged; otherwise, a cookie will be created containing all the products in the cart.
 - The payment is managed by stripe (you need to retrieve stripe keys).
 
