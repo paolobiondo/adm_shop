@@ -31,8 +31,20 @@
     </header>
     <div class="container clear_row" style="margin-top:50px;">
         <main class="container">
-            {{form.errors}}
-            {{form_shipping.errors}}
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                            {{field.label}}: {{ error|escape }}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+            {% if form_shipping.errors %}
+                {% for field in form_shipping %}
+                    {% for error in field.errors %}
+                            {{field.label}}: {{ error|escape }}
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
             <div class="row g-5">
             {% if products %}
                 <div class="col-md-5 col-lg-4 order-md-last checkout">

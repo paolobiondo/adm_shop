@@ -75,10 +75,17 @@ class Checkout(LoginRequiredMixin, View):
     
     def post(self,request):
         args = {}
-        address_form = UserAddressForm(request.POST)
-        address_form_shipping = UserAddressShippingForm(request.POST)
+        args['form'] = UserAddressForm(request.POST)
+        args['form_shipping'] = UserAddressShippingForm(request.POST)
 
-        if address_form.is_valid() and address_form_shipping.is_valid():
+        cart_user = product_models.Cart.objects.filter(user = request.user).first()
+        products = product_models.EntryCart.objects.filter(cart = cart_user).select_related('product')
+        args["products"] = []
+        for product in products:
+            total = product.quantity*product.product.price
+            args["products"].append({'entry':product,'total':total})
+
+        if args['form'].is_valid() and args['form_shipping'].is_valid():
             #check if billing shipping address exists
             if(UserAddress.objects.filter(Q(user=request.user, type="billing")).exists()):
                 user_address = UserAddress.objects.filter(Q(user=request.user, type="billing")).first()
@@ -86,14 +93,14 @@ class Checkout(LoginRequiredMixin, View):
                 user_address = UserAddress()
                 user_address.user = request.user
 
-            user_address.country = address_form.cleaned_data['country']
-            user_address.name = address_form.cleaned_data['name']
-            user_address.surname = address_form.cleaned_data['surname']
-            user_address.address = address_form.cleaned_data['address']
-            user_address.city = address_form.cleaned_data['city']
-            user_address.zip_address = address_form.cleaned_data['zip_address']
-            user_address.telephone = address_form.cleaned_data['telephone']
-            user_address.instruction = address_form.cleaned_data['instruction']
+            user_address.country = args['form'].cleaned_data['country']
+            user_address.name = args['form'].cleaned_data['name']
+            user_address.surname = args['form'].cleaned_data['surname']
+            user_address.address = args['form'].cleaned_data['address']
+            user_address.city = args['form'].cleaned_data['city']
+            user_address.zip_address = args['form'].cleaned_data['zip_address']
+            user_address.telephone = args['form'].cleaned_data['telephone']
+            user_address.instruction = args['form'].cleaned_data['instruction']
             user_address.type="billing"
             user_address.save()
 
@@ -104,14 +111,14 @@ class Checkout(LoginRequiredMixin, View):
                     user_address_shipping = UserAddress()
                     user_address_shipping.user = request.user
 
-                user_address_shipping.country = address_form.cleaned_data['country']
-                user_address_shipping.name = address_form.cleaned_data['name']
-                user_address_shipping.surname = address_form.cleaned_data['surname']
-                user_address_shipping.address = address_form.cleaned_data['address']
-                user_address_shipping.city = address_form.cleaned_data['city']
-                user_address_shipping.zip_address = address_form.cleaned_data['zip_address']
-                user_address_shipping.telephone = address_form.cleaned_data['telephone']
-                user_address_shipping.instruction = address_form.cleaned_data['instruction']
+                user_address_shipping.country = args['form'].cleaned_data['country']
+                user_address_shipping.name = args['form'].cleaned_data['name']
+                user_address_shipping.surname = args['form'].cleaned_data['surname']
+                user_address_shipping.address = args['form'].cleaned_data['address']
+                user_address_shipping.city = args['form'].cleaned_data['city']
+                user_address_shipping.zip_address = args['form'].cleaned_data['zip_address']
+                user_address_shipping.telephone = args['form'].cleaned_data['telephone']
+                user_address_shipping.instruction = args['form'].cleaned_data['instruction']
                 user_address_shipping.save()
             else:
                 if(UserAddress.objects.filter(Q(user=request.user, type="shipping")).exists()):
@@ -120,14 +127,14 @@ class Checkout(LoginRequiredMixin, View):
                     user_address_shipping = UserAddress()
                     user_address_shipping.user = request.user
 
-                user_address_shipping.country = address_form_shipping.cleaned_data['country_shipping']
-                user_address_shipping.name = address_form_shipping.cleaned_data['name_shipping']
-                user_address_shipping.surname = address_form_shipping.cleaned_data['surname_shipping']
-                user_address_shipping.address = address_form_shipping.cleaned_data['address_shipping']
-                user_address_shipping.city = address_form_shipping.cleaned_data['city_shipping']
-                user_address_shipping.zip_address = address_form_shipping.cleaned_data['zip_address_shipping']
-                user_address_shipping.telephone = address_form.cleaned_data['telephone']
-                user_address_shipping.instruction = address_form.cleaned_data['instruction']
+                user_address_shipping.country = args['form_shipping'].cleaned_data['country_shipping']
+                user_address_shipping.name = args['form_shipping'].cleaned_data['name_shipping']
+                user_address_shipping.surname = args['form_shipping'].cleaned_data['surname_shipping']
+                user_address_shipping.address = args['form_shipping'].cleaned_data['address_shipping']
+                user_address_shipping.city = args['form_shipping'].cleaned_data['city_shipping']
+                user_address_shipping.zip_address = args['form_shipping'].cleaned_data['zip_address_shipping']
+                user_address_shipping.telephone = args['form'].cleaned_data['telephone']
+                user_address_shipping.instruction = args['form'].cleaned_data['instruction']
                 user_address_shipping.save()
 
             cart_user = product_models.Cart.objects.filter(user = request.user).first()
