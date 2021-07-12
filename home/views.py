@@ -166,7 +166,7 @@ class Payment(LoginRequiredMixin, View):
 class Success(LoginRequiredMixin, View):
     def get(self, request, id):
         args = {}
-        args['order'] = get_object_or_404(product_models.Order, id=id)
+        args['order'] = get_object_or_404(product_models.Order, Q(id=id, status="paid"))
         return render(request,'home/success.html', args)
 
 class Cancelled(LoginRequiredMixin, View):

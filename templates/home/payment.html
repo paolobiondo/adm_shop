@@ -54,7 +54,6 @@ if(button_payment) {
         fetch("/create-checkout-session/{{order.id}}")
         .then((result) => { return result.json(); })
         .then((data) => {
-        console.log(data);
         // Redirect to Stripe Checkout
         stripe.redirectToCheckout({sessionId: data.sessionId})
         })
