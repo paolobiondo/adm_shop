@@ -1,7 +1,9 @@
 # ADM Shop
 
 An Ecommerce built in Django
-![#f03c15] **WORKING IN PROGRESS**
+```diff
+- **WORKING IN PROGRESS**
+```
 
 ## **FEATURES**
 - Product added to cart are inserted into the DB if the user is logged; otherwise, a cookie will be created containing all the products in the cart.
