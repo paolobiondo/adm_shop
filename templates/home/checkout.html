@@ -31,11 +31,8 @@
     </header>
     <div class="container clear_row" style="margin-top:50px;">
         <main class="container">
-            {% if success == 2 %}
-                You made a mistake!
-                <br>
-                <a href="{% url 'home:index' %}">Go Home</a>
-            {% else %}
+            {{form.errors}}
+            {{form_shipping.errors}}
             <div class="row g-5">
             {% if products %}
                 <div class="col-md-5 col-lg-4 order-md-last checkout">
@@ -204,7 +201,6 @@
                 </p>
             {% endif %}
             </div>
-        {% endif %}
         </main>
     </div>
 

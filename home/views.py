@@ -147,8 +147,6 @@ class Checkout(LoginRequiredMixin, View):
             newOrder.save()
             
             return HttpResponseRedirect(reverse('home:payment', kwargs={'id':newOrder.id}))
-        else:
-            args['success'] = 2
 
         return render(request,'home/checkout.html', args)
 
