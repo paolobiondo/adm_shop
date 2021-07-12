@@ -8,5 +8,10 @@ FEATURES
 
 To work, it needs a .env file including:
 ```
-a
+SECRET_KEY=your secret key
+DEBUG=True (True/False)
+DATABASE_NAME=db name
+DATABASE_USER=db user name
+DATABASE_PASS=db user password
+DATABASE_HOST=db host
 ```
