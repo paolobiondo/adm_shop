@@ -166,8 +166,11 @@ class Payment(LoginRequiredMixin, View):
 class Success(LoginRequiredMixin, View):
     def get(self, request, id):
         args = {}
-        args['order'] = get_object_or_404(product_models.Order, Q(id=id, status="paid"))
-        return render(request,'home/success.html', args)
+        args['order'] = product_models.Order.objects.filter(Q(id=id, status="paid")).first()
+        if args['order']:
+            return render(request,'home/success.html', args)
+        else:
+            return HttpResponseRedirect(reverse('home:cancelled'))
 
 class Cancelled(LoginRequiredMixin, View):
     def get(self, request):
@@ -246,7 +249,6 @@ def stripe_webhook(request):
         return HttpResponse(status=400)
 
     # Handle the checkout.session.completed event
-    print(event['type'])
     if event['type'] == 'checkout.session.completed':
         client_reference_id=event['data']['object']['client_reference_id']
         order = product_models.Order.objects.filter(Q(id=client_reference_id, status="payment")).first()
