@@ -193,7 +193,7 @@ def stripe_config(request):
 @csrf_exempt
 def create_checkout_session(request, id):
     if request.method == 'GET':
-        domain_url = 'http://localhost:8000/'
+        domain_url = 'https://admshop.pythonanywhere.com/'
         order = product_models.Order.objects.filter(Q(id=id, status="payment")).first()
         stripe.api_key = Setting.objects.filter(setting="STRIPE_SECRET_KEY").first().value
         try:
