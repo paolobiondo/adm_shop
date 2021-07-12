@@ -19,3 +19,5 @@ DATABASE_PASS=db user password
 DATABASE_HOST=db host
 ```
 
+## **INSTALLATION**
+1)
