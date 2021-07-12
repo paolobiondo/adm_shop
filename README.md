@@ -2,7 +2,7 @@
 
 An Ecommerce built in Django
 ```diff
-**WORKING IN PROGRESS**
+-**WORKING IN PROGRESS**
 ```
 
 ## **FEATURES**
