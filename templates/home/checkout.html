@@ -57,7 +57,14 @@
                             <div>
                             <h6 class="my-0">{{product.entry.quantity}}x {{product.entry.product.name}}</h6>
                             </div>
-                            <span class="text-muted" onclick>{{product.total}} {{currency.value}}</span>
+                            <span class="text-muted" onclick>
+                                {% if product.entry.product.discount_price%}
+                                    <span class="discounted_price_card" style="font-size:14px">{{product.entry.product.price}} {{currency.value}}</span>
+                                    {{product.entry.product.discount_price}}{{currency.value}}
+                                {% else %}
+                                    {{product.entry.product.price}}{{currency.value}}
+                                {% endif %}
+                            </span>
                         </li>
                         {% endfor %}
                         <li class="list-group-item d-flex justify-content-between">
