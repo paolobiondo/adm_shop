@@ -25,7 +25,14 @@
                                 </div>
                                 <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
                                     <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
-                                        <h6><strong>{{item.product.price}} {{currency.value}} </strong></h6>
+                                        <h6><strong>
+                                            {% if item.product.discount_price%}
+                                            {{item.product.discount_price}}{{currency.value}} <br>
+                                            <span class="discounted_price_card" style="font-size:14px">{{item.product.price}} {{currency.value}}</span>
+                                            {% else %}
+                                            {{item.product.price}}{{currency.value}}
+                                            {% endif %}
+                                        </strong></h6>
                                     </div>
                                     <div class="col-6 col-md-4">
                                         <div class="quantity">

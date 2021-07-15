@@ -48,7 +48,6 @@ class Product(View):
 
         else:
             args['success'] = 0
-        print(args)
         return HttpResponse(json.dumps(args))
 
 class UpdateCart(View):

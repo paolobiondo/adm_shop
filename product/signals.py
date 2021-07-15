@@ -13,7 +13,11 @@ from product import models as product_models
 
 @receiver(post_save, sender=product_models.EntryCart)
 def update_add_cart(sender, instance, **kwargs):
-    instance.cart.total = Decimal(instance.cart.total) + (Decimal(instance.quantity) * Decimal(instance.product.price))
+    if(instance.product.discount_price != 0):
+        instance.cart.total = Decimal(instance.cart.total) + (Decimal(instance.quantity) * Decimal(instance.product.discount_price))
+    else:
+        instance.cart.total = Decimal(instance.cart.total) + (Decimal(instance.quantity) * Decimal(instance.product.price))
+    
     instance.cart.count = int(instance.cart.count) + int(instance.quantity)
     instance.cart.updated = datetime.now()
     instance.cart.save()
@@ -21,7 +25,11 @@ def update_add_cart(sender, instance, **kwargs):
 
 @receiver(pre_delete, sender=product_models.EntryCart)
 def update_delete_cart(sender, instance, **kwargs):
-    instance.cart.total = Decimal(instance.cart.total) - (Decimal(instance.quantity) * Decimal(instance.product.price))
+    if(instance.product.discount_price != 0):
+        instance.cart.total = Decimal(instance.cart.total) - (Decimal(instance.quantity) * Decimal(instance.product.discount_price))
+    else:
+        instance.cart.total = Decimal(instance.cart.total) - (Decimal(instance.quantity) * Decimal(instance.product.price))
+
     instance.cart.count -= int(instance.quantity)
     instance.cart.updated = datetime.now()
     instance.cart.save()
