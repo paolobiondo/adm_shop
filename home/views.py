@@ -144,7 +144,10 @@ class Checkout(LoginRequiredMixin, View):
             totalOrder = 0
             totalUnits = 0
             for entryCart in entriesCart:
-                totalOrder += entryCart.product.price*entryCart.quantity
+                if(entryCart.product.discount_price != 0):
+                    totalOrder += entryCart.product.discount_price*entryCart.quantity
+                else:
+                    totalOrder += entryCart.product.price*entryCart.quantity
                 totalUnits += entryCart.quantity
                 product_models.EntryOrder.objects.create(order=newOrder,product=entryCart.product,quantity=entryCart.quantity)
                 product_models.EntryCart.objects.filter(Q(cart=cart_user,product=entryCart.product)).delete()
@@ -177,7 +180,7 @@ class Cancelled(LoginRequiredMixin, View):
         args = {}
         return render(request,'home/cancelled.html', args)
 
-class Category(LoginRequiredMixin, View):
+class Category(View):
     def get(self, request, slug):
         args = {}
         args['cat'] = get_object_or_404(product_models.Category, slug=slug)

@@ -174,7 +174,7 @@
           if(pos_cookie_cart != -1) {
             var pos_cookie_cart_2 = document.cookie.slice(pos_cookie_cart).search(';');
             if(pos_cookie_cart_2>0) {
-                cookie_to_save = document.cookie.slice(pos_cookie_cart,pos_cookie_cart_2);
+                cookie_to_save = document.cookie.slice(pos_cookie_cart,pos_cookie_cart+pos_cookie_cart_2);
             } else {
                 cookie_to_save = document.cookie.slice(pos_cookie_cart);
             }

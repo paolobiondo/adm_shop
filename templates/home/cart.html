@@ -122,7 +122,6 @@
 <script>
     var total_cart = 0.0
     var products = get_cookie_cart();
-   
     if(products) {
         var products_splitted = products.split(",");
         var html = `<div class="d-inline">
@@ -156,7 +155,6 @@
                   csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
               },
               success: function success_ajax(data) {
-                console.log(JSON.parse(data));
                 success_ajax.data = JSON.parse(data); // converts string of json to object
                   var html = `
                     <div class="row" id="shopping_cart_row-`+success_ajax.data.product.id+`">
@@ -166,16 +164,22 @@
                         <div class="col-12 text-center text-lg-start col-sm-12 col-md-6">
                             <h5 class="product-name"><strong>`+success_ajax.data.product.name+`</strong></h5>
                         </div>
-                        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">
-                            <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
+                        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right row">`;
+                     if(success_ajax.data.product.discount_price != 0) {
+                        html += ` <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
+                                <h6><span class="discounted_price_card" style="font-size:14px">`+success_ajax.data.product.discount_price+` {{currency.value}}</span>
+                                    `+success_ajax.data.product.price+` {{currency.value}}
+                                    </h6>
+                            </div>`;
+                     } else {
+                        html += ` <div class="col-12 col-md-4 text-center text-md-right" style="padding-top: 5px">
                                 <h6><strong><span id="price-product-`+success_ajax.data.product.id+`">`+success_ajax.data.product.price+`</span> {{currency.value}} </strong></h6>
-                            </div>
-                            <div class="col-6 col-md-4">
+                            </div>`;
+                     }
+                    html += `        <div class="col-6 col-md-4">
                                 <div class="quantity">
-                                    <input type="button" value="+" class="plus">
                                     <input type="number" step="1" max="99" min="1" value="`+quantity+`" title="Qty" class="qty"
-                                        size="4">
-                                    <input type="button" value="-" class="minus">
+                                        size="4" readonly>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 text-end">
