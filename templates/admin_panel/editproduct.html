@@ -21,33 +21,39 @@
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Title</label>
                         <div class="col-sm-10">
-                        <input type="text"  class="form-control" id="title" name="id_title" value="{{product.name}}">
+                        <input type="text"  class="form-control" id="title" name="title" value="{{product.name}}">
                         </div>
                     </div>     
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Units</label>
                         <div class="col-sm-10">
-                        <input type="text"  class="form-control" id="units" name="id_units" value="{{product.units}}">
+                        <input type="text"  class="form-control" id="units" name="units" value="{{product.units}}">
                         </div>
                     </div>  
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Price</label>
                         <div class="col-sm-10">
-                        <input type="text"  class="form-control" id="units" name="id_price" value="{{product.price}}">
+                        <input type="text"  class="form-control" id="units" name="price" value="{{product.price}}">
                         </div>
                     </div> 
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Discounted Price</label>
                         <div class="col-sm-10">
-                        <input type="text"  class="form-control" id="units" name="id_discountedprice" value="{{product.discount_price}}">
+                        <input type="text"  class="form-control" id="units" name="discounted_price" value="{{product.discount_price}}">
                         </div>
                     </div>     
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Description</label>
                         <div class="col-sm-10">
-                        <textarea class="form-control" name="id_description" id="description">{{product.description}}</textarea>
+                        <textarea class="form-control" name="description" id="description">{{product.description}}</textarea>
                         </div>
                     </div>  
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Category</label>
+                        <div class="col-sm-10">
+                        {{form.category}}
+                        </div>
+                    </div> 
                     <div class="form-group row py-5">
                         <div class="d-grid d-md-flex justify-content-md-start">
                             <button type="submit" class="btn btn-primary btn-lg px-4 me-md-2">Save</button>
@@ -63,5 +69,8 @@
 {% block script_content %}
 <script>
     jQuery('.nav-item-products').addClass('active');
+</script>
+<script>
+    $("#id_category").val("{{product.category}}");
 </script>
 {% endblock %}

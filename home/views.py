@@ -181,7 +181,7 @@ class Category(LoginRequiredMixin, View):
     def get(self, request, slug):
         args = {}
         args['cat'] = get_object_or_404(product_models.Category, slug=slug)
-        args['cat_items'] =  product_models.Product.objects.filter(category = slug)
+        args['cat_items'] =  product_models.Product.objects.filter(category = slug, publish=True)
         return render(request,'home/category.html', args)
 
 @csrf_exempt

@@ -3,9 +3,11 @@ from django.views import View
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import GroupRequiredMixin
+from django.shortcuts import get_object_or_404
 
 from product import models as products_model
 from product import tools as tools_products
+from admin_panel import forms 
 
 class Index(GroupRequiredMixin, View):
     group_required = "admin_panel"
@@ -32,12 +34,31 @@ class EditProduct(GroupRequiredMixin, View):
     group_required = "admin_panel"
     def get(self,request,id):
         args = {}
-        args['product'] = products_model.Product.objects.filter(id=id).first()
+        args['product'] = get_object_or_404(products_model.Product,id=id)
+        args['form'] = forms.EditProductForm()
         return render(request,'admin_panel/editproduct.html', args)
         
     def post(self,request, id):
         args = {}
-        args['product'] = products_model.Product.objects.filter(id=id).first()
+        args['product'] = get_object_or_404(products_model.Product,id=id)
+        product = args['product']
+
+        args['form'] = forms.EditProductForm(request.POST)
+        if args['form'].is_valid():
+            product.name=args['form'].cleaned_data['title']
+            product.description = args['form'].cleaned_data['description']
+            product.price = args['form'].cleaned_data['price']
+            if(args['form'].cleaned_data['discounted_price'] != "None"):
+                product.discount_price = args['form'].cleaned_data['discounted_price']
+            product.units = args['form'].cleaned_data['units']
+            if(args['form'].cleaned_data['category'] != 0):
+                product.category = args['form'].cleaned_data['category']
+            else:
+                product.category = ""
+
+            product.save()
+
+        args['success'] = 1
         return render(request,'admin_panel/editproduct.html', args)
 
 class Categories(GroupRequiredMixin, View):

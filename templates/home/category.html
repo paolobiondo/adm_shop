@@ -7,6 +7,7 @@
         <span class="sub-title">Category</span>
       <h2><span>{{cat.name}}</span></h2>
     </div>
+    {% if cat_items %}
     {%for product in cat_items %}
     <div class="col-6 col-sm-6 col-md-4 col-lg-3">
         <div class="card mb-2 border-light box-shadow">
@@ -19,6 +20,9 @@
         </div>
     </div>
     {% endfor %}
+    {% else %}
+    No product in this category
+    {% endif %}
 </div>	
 {% endblock %}
 {% block script_content %}
