@@ -40,7 +40,16 @@
         <a href="{% url 'product:product' id=product.id %}"><img class="card-img-top" data-src="media/{{product.cover}}" src="media/{{product.cover}}" data-holder-rendered="true" style="height: 225px; width: 100%; display: block;"></a>
         <div class="card-body">
             <a href="{% url 'product:product' id=product.id %}"><p class="card-text card-text-name text-center">{{product.name}}</p></a>
-            {%if product.price %}<p class="card-text text-center price_card">{{product.price}}{{currency.value}} {% if product.discount_price %}<span class="discounted_price_card">{{product.discount_price}} {{currency.value}}</span>{% endif %}</p>{% endif%}
+            {%if product.discount_price %}
+            <p class="card-text text-center price_card">{{product.discount_price}}{{currency.value}} 
+                {% if product.discount_price %}
+                <span class="discounted_price_card">{{product.price}} {{currency.value}}</span>
+                {% endif %}
+            </p>
+            {% else %}
+            <p class="card-text text-center price_card">{{product.price}}{{currency.value}} </p>
+            {% endif%}
+            
             <p class="text-center"><button type="button" class="btn btn-sm btn-primary add-to-cart-{{product.id}}" onclick="addToCart({{product.id}})">Add to Cart</button></p>
         </div>
         </div>
