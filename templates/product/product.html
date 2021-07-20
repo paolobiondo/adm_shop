@@ -24,6 +24,14 @@
           </div>
           <div class="col-lg-6">
             <h1 class="display-5 fw-bold lh-1 mb-3">{{product.name}}</h1>
+            <h5><strong>
+              {% if product.discount_price%}
+              {{product.discount_price}}{{currency.value}}
+              <span class="discounted_price_card" style="font-size:14px">{{product.price}} {{currency.value}}</span>
+              {% else %}
+              {{product.price}}{{currency.value}}
+              {% endif %}
+          </strong></h5>
             <p class="lead">{{product.description}}</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
               <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="addToCart({{product.id}})">Add to Cart</button>
