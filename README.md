@@ -6,8 +6,9 @@ An Ecommerce built in Django
 ```
 
 ## **FEATURES**
-- Product added to cart are inserted into the DB if the user is logged; otherwise, a cookie will be created containing all the products in the cart.
-- The payment is managed by stripe (you need to retrieve stripe keys).
+- Django 3.2
+- Bootstrap V5
+- Stripe Checkout
 
 To work correctly, it needs a .env file inside the folder adm including:
 ```
@@ -19,5 +20,3 @@ DATABASE_PASS=db user password
 DATABASE_HOST=db host
 ```
 
-## **INSTALLATION**
-1)
