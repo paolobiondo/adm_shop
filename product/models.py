@@ -10,7 +10,7 @@ class Product(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     price = models.DecimalField(null=True, max_digits=10, decimal_places=2 )
-    discount_price = models.DecimalField(null=True, blank=True, max_digits=10, decimal_places=2)
+    discount_price = models.DecimalField(default=0, blank=True, max_digits=10, decimal_places=2)
     units = models.IntegerField()
     cover = models.ImageField(upload_to='covers/%Y/%m/%d', blank=True)
     publish = models.BooleanField(default=True)
