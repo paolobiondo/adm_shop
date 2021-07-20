@@ -32,7 +32,7 @@
               {{product.price}}{{currency.value}}
               {% endif %}
           </strong></h5>
-            <p class="lead">{{product.description}}</p>
+            <p class="lead">{{product.description|safe}}</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
               <button type="button" class="btn btn-primary btn-lg px-4 me-md-2" onclick="addToCart({{product.id}})">Add to Cart</button>
               <button type="button" class="btn btn-outline-secondary btn-lg px-4">Watchlist</button>
