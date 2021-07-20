@@ -36,10 +36,12 @@ class EditProduct(GroupRequiredMixin, View):
         args = {}
         args['product'] = get_object_or_404(products_model.Product,id=id)
         args['form'] = forms.EditProductForm()
+        args['categories'] = products_model.Category.objects.all()
         return render(request,'admin_panel/editproduct.html', args)
         
     def post(self,request, id):
         args = {}
+        args['categories'] = products_model.Category.objects.all()
         args['product'] = get_object_or_404(products_model.Product,id=id)
         product = args['product']
 
