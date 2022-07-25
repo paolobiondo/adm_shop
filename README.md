@@ -1,9 +1,6 @@
 # ADM Shop
 
 An Ecommerce built in Django
-```diff
--WORKING IN PROGRESS
-```
 
 ## **FEATURES**
 - Django 3.2
